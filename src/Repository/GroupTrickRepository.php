@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Group;
+use App\Entity\GroupTrick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Group|null find($id, $lockMode = null, $lockVersion = null)
- * @method Group|null findOneBy(array $criteria, array $orderBy = null)
- * @method Group[]    findAll()
- * @method Group[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method GroupTrick|null find($id, $lockMode = null, $lockVersion = null)
+ * @method GroupTrick|null findOneBy(array $criteria, array $orderBy = null)
+ * @method GroupTrick[]    findAll()
+ * @method GroupTrick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GroupRepository extends ServiceEntityRepository
+class GroupTrickRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Group::class);
+        parent::__construct($registry, GroupTrick::class);
     }
 
     // /**
-    //  * @return Group[] Returns an array of Group objects
+    //  * @return GroupTrick[] Returns an array of GroupTrick objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class GroupRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Group
+    public function findOneBySomeField($value): ?GroupTrick
     {
         return $this->createQueryBuilder('g')
             ->andWhere('g.exampleField = :val')

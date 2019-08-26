@@ -37,8 +37,7 @@ class Trick
     private $modifiedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Group")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\GroupTrick", inversedBy="tricks")
      */
     private $groupTrick;
 
@@ -95,12 +94,12 @@ class Trick
         return $this;
     }
 
-    public function getGroupTrick(): ?Group
+    public function getGroupTrick(): ?GroupTrick
     {
         return $this->groupTrick;
     }
 
-    public function setGroupTrick(?Group $groupTrick): self
+    public function setGroupTrick(?GroupTrick $groupTrick): self
     {
         $this->groupTrick = $groupTrick;
 
