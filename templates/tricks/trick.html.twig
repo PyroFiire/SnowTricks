@@ -1,14 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{trick.title}}{% endblock %}
+{% block stylesheets %}<link href={{ asset('css/trick.css') }} type="text/css" rel="stylesheet">{% endblock %}
 
 {% block body %}
-
-    <div class="container-fluid">
-        <div class="row">
-        <h2> je suis un trick {{ trick.title }} </h2>
-
+    <div id="trick" class="container">
+        <figure>
+            <img id="spotlight_picture" src="https://via.placeholder.com/400x200"  alt="...">
+            <figcaption><h1>{{ trick.title }}</h1></figcaption>
+        </figure>
+        <p>Display Medias</p>
+        <p id="description">{{trick.description}}</p>
+        <div id="information" class="row justify-content-center">
+            <p class="col-3">Groupe : {{trick.groupTrick.name}}</p>
+            <p class="col-3">Créé le {{trick.createdAt|date("d/m/Y à H:i") }}</p>
+            {% if trick.modifiedAt %}
+                <p class="col-3">Modifié le {{trick.modifiedAt|date("d/m/Y à H:i") }}</p>
+            {% endif %}
         </div>
+        <hr>
+        <p>Display Leave a comment</p>
+        <hr>
+        <p>Display comments</p>
     </div>
+    
 
 {% endblock %}

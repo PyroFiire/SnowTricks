@@ -31,12 +31,11 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/tricks/{title}", name="trick_show")
+     * @Route("/trick/{title}", name="trick_show")
      */
     public function show(TrickRepository $trickRepository, $title)
     {
-        $title = str_replace("_", " ", $title);
-        $trick = $trickRepository->findOneByTitle($title);
+        $trick = $trickRepository->findOneByTitle($title = str_replace("_", " ", $title));
 
         return $this->render('tricks/trick.html.twig', [
             'trick' => $trick
