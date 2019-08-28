@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Trick;
+use App\Repository\TrickRepository;
 
 class TricksController extends AbstractController
 {
@@ -20,14 +21,24 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks", name="tricks")
      */
-    public function homepage()
+    public function homepage(TrickRepository $trickRepository)
     {
-        $trickRepository = $this->getDoctrine()->getRepository(Trick::class);
-
         $tricks = $trickRepository->findAll();
 
         return $this->render('tricks/tricks.html.twig', [
             'tricks' => $tricks
+        ]);
+    }
+
+    /**
+     * @Route("/trick/{title}", name="trick_show")
+     */
+    public function show(TrickRepository $trickRepository, $title)
+    {
+        $trick = $trickRepository->findOneByTitle($title = str_replace("_", " ", $title));
+
+        return $this->render('tricks/trick.html.twig', [
+            'trick' => $trick
         ]);
     }
 }
