@@ -39,12 +39,12 @@ class Comment
 
     public function getContent(): ?string
     {
-        return $this->description;
+        return $this->content;
     }
 
-    public function setContent(?string $description): self
+    public function setContent(?string $content): self
     {
-        $this->description = $description;
+        $this->content = $content;
 
         return $this;
     }
