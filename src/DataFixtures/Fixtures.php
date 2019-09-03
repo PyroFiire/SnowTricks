@@ -9,7 +9,7 @@ use App\Entity\GroupTrick;
 use App\Entity\Trick;
 use App\Entity\Comment;
 
-class TrickFixtures extends Fixture
+class Fixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
