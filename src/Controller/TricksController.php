@@ -31,6 +31,17 @@ class TricksController extends AbstractController
     }
 
     /**
+     * @Route("/trick/create", name="trick_create")
+     * @Route("/trick/edit", name="trick_edit")
+     */
+    public function formTrick()
+    {
+        return $this->render('tricks/formTrick.html.twig', [
+    
+        ]);
+    }
+
+    /**
      * @Route("/trick/{title}", name="trick_show")
      */
     public function show(TrickRepository $trickRepository, $title)
