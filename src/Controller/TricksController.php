@@ -17,15 +17,9 @@ use App\Form\TrickType;
 
 class TricksController extends AbstractController
 {
+    
     /**
      * @Route("/", name="index")
-     */
-    public function index()
-    {
-        return $this->redirectToRoute('tricks');
-    }
-
-    /**
      * @Route("/tricks", name="tricks")
      */
     public function homepage(TrickRepository $trickRepository)
