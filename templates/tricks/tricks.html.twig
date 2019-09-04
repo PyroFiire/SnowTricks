@@ -13,13 +13,13 @@
             {% for trick in tricks %}
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3" style="padding:10px;">
                     <div class="card">
-                        <a href="{{ path('trick_show', {'title':trick.title|replace({' ':"_"})}) }}">
+                        <a href="{{ path('trick_show', {'slug':trick.slug}) }}">
                             <img class="card-img-top" src="https://via.placeholder.com/300x200"  alt="...">
                         </a>
                         <div class="card-body d-flex flex-row justify-content-between">
-                            <a href="{{ path('trick_show', {'title':trick.title|replace({' ':"_"})}) }}" class="h4 card-title text-truncate">{{ trick.title }}</a>
+                            <a href="{{ path('trick_show', {'slug':trick.slug}) }}" class="h4 card-title text-truncate">{{ trick.title }}</a>
                             <div class="d-flex flex-row">
-                                <a href="#" class"card-link" style="margin-right:15px">
+                                <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class"card-link" style="margin-right:15px">
                                     <i class="fas fa-pencil-alt fa-2x"></i>
                                 </a>
                                 <a href="#" class"card-link">

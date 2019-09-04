@@ -7,6 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\GroupTrick;
+
 class TrickType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -14,9 +17,10 @@ class TrickType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('createdAt')
-            ->add('modifiedAt')
-            ->add('groupTrick')
+            ->add('groupTrick', EntityType::class, [
+                'class' => GroupTrick::class,
+                'choice_label' => 'name'
+            ]);
         ;
     }
 

@@ -3,6 +3,12 @@
 {% block title %}Create a Trick{% endblock %}
 
 {% block body %}
-    
-
+    <div class="container">
+        {{ form_start(formTrick) }}
+            {{form_row(formTrick.title)}}
+            {{form_row(formTrick.description)}}
+            {{form_row(formTrick.groupTrick)}}
+            <button type="submit" class="btn btn-primary">Create a trick !</button>
+        {{ form_end(formTrick) }}
+    </div>
 {% endblock %}
