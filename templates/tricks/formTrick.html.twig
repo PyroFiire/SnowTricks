@@ -1,14 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create a Trick{% endblock %}
+{% block title %}
+    {% if editMode %}
+        Edit the Trick
+    {% else %}
+        Create your Trick
+    {% endif %}
+{% endblock %}
+{% block stylesheets %}<link href={{ asset('css/formTrick.css') }} type="text/css" rel="stylesheet">{% endblock %}
 
 {% block body %}
-    <div class="container">
-        {{ form_start(formTrick) }}
-            {{form_row(formTrick.title)}}
-            {{form_row(formTrick.description)}}
-            {{form_row(formTrick.groupTrick)}}
-            <button type="submit" class="btn btn-primary">Create a trick !</button>
-        {{ form_end(formTrick) }}
+    <div id="trick" class="container">
+        <figure>
+            <img id="spotlight_picture" src="https://via.placeholder.com/400x200"  alt="...">
+            <figcaption><h1>{{ trick.title }}</h1></figcaption>
+            <div id="picture_buttons" class="d-flex flex-row">
+                <a href="#" class"card-link" style="margin-right:15px">
+                    <i class="fas fa-pencil-alt fa-2x"></i>
+                </a>
+                <a href="#" class"card-link">
+                    <i class="fas fa-trash-alt fa-2x"></i>
+                </a>
+            </div>
+        </figure>
+        <p>Display Medias</p>
+        <div class="row">
+            <div id="form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
+                {{ form_start(formTrick) }}
+                    {{form_row(formTrick.title)}}
+                    {{form_row(formTrick.description)}}
+                    {{form_row(formTrick.groupTrick)}}
+                    <div id="buttons_form">
+                        {% if editMode %}
+                            <a href="#" class="btn btn-danger">Delete</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        {% endif %}
+                    </div>
+                {{ form_end(formTrick) }}
+            </div>
+        </div>
     </div>
+
+    
 {% endblock %}

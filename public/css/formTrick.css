@@ -1,3 +1,4 @@
+
 /********** BACKGROUND *************/
 #base_content{
     background-image: url("../image/snowboarding-3554x1999.jpg");
@@ -13,7 +14,7 @@
 #trick{
     border:1px solid black;
     box-shadow: 2px 2px 10px black;
-    padding:0px;
+    padding:0px 0px 50px 0px;
     background-color: white;
 }
 
@@ -41,15 +42,30 @@ figcaption{
 h1{
     text-align: center;
 }
-/************ CONTENTS *************/
-#description{
-    padding : 0px 20px;
-}
-@media all and (min-width: 768px) /* Medium */      {#description{padding: 0px 70px ;}}
 
-#information > p {
-    border : 1px solid black;
-    margin : 0px 10px;
-    padding: 10px;
-    text-align : center;
+
+/******** FORM ************/
+#form_div{  
+    margin: 0px  auto;
+}
+form{
+    margin : 5px;
+}
+label{
+    display:none;
+}
+
+@media all and (min-width: 768px) /* Medium and + */      {#trick_title{width: 60%;}}
+#trick_description{
+    height : 250px;
+}
+#trick_groupTrick{
+    width: 40%
+}
+#buttons_form {
+    text-align : center ;
+}
+@media all and (min-width: 768px) /* Medium and + */      {#buttons_form{text-align : right;}}
+#buttons_form .btn{
+    width: 71px;
 }

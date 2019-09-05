@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link href="https://bootswatch.com/4/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href={{ asset('css/style.css') }} type="text/css" rel="stylesheet">
+        {% block stylesheets %}{% endblock %}
         <script src="https://kit.fontawesome.com/93cda2868d.js"></script>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
