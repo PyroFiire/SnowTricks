@@ -51,9 +51,6 @@ h1{
 form{
     margin : 5px;
 }
-label{
-    display:none;
-}
 
 @media all and (min-width: 768px) /* Medium and + */      {#trick_title{width: 60%;}}
 #trick_description{
