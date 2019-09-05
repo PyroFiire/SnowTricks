@@ -24,6 +24,7 @@ class Fixtures extends Fixture
             for ($j=1; $j < random_int(1,10) ; $j++) { 
                 $trick = new Trick();
                 $trick->setTitle("Trick numéro ".$j." ".$i)
+                      ->setSlug(str_replace(" ", "_", $trick->getTitle()))
                       ->setDescription("Bonjour, voici la description de l'article numéro ".$j)
                       ->setCreatedAt(new \DateTime())
                       ->setModifiedAt(new \DateTime())
