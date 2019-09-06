@@ -27,7 +27,7 @@
             {% endif %}
         </div>
         <hr>
-        <div id="comment_form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <div id="comment_form_div" class="col-12 col-md-11 col-lg-10 col-xl-9">
             {{ form_start(formComment) }}
                 {{ form_errors(formComment.content) }}
                 {{ form_widget(formComment.content) }}
@@ -36,9 +36,16 @@
 
         </div>
         <hr>
-        <div>
+        <div id="comments" class="row justify-content-center">
             {% for comment in trick.comments %}
-                {{comment.content}}
+                <div class="comment col-12 col-md-10 col-lg-9">
+                    <img src="https://via.placeholder.com/100x100"  alt="...">
+                    <div>
+                        <strong>Name</strong>
+                        <p>{{comment.content}}</p>
+                        <small>the {{comment.createdAt|date("Y/m/d \\a\\t h:i a") }}</small>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>

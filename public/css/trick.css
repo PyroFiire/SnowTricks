@@ -69,3 +69,26 @@ form button{
     width : 50%;
     margin-left: 20px;
 }
+
+/************** DISPLAY COMMENTS ********************/
+.comment{
+    position: relative;
+    margin-bottom: 15px;
+}
+.comment img{
+    position: absolute;
+    right : calc(100% - 154px);
+    border-radius: 50%;
+    height: 84px;
+    width:84px;
+    
+}
+.comment > div{
+    border : 1px solid black;
+    margin:0px 84px 0px 154px;
+    padding: 5px;
+}
+.comment p{
+    margin-bottom : 0px;
+    word-wrap: break-word;
+}
