@@ -53,3 +53,19 @@ h1{
     padding: 10px;
     text-align : center;
 }
+
+/************** LEAVE COMMENT **************/
+
+#comment_form_div{
+    margin: 0px  auto;
+}
+form{
+    display : flex;
+}
+form input{
+    height : inherit!important;
+}
+form button{
+    width : 50%;
+    margin-left: 20px;
+}
