@@ -27,9 +27,19 @@
             {% endif %}
         </div>
         <hr>
-        <p>Display Leave a comment</p>
+        <div>
+            {{ form_start(formComment) }}
+                {{form_row(formComment.content)}}
+                <button type="submit" class="btn btn-primary">Leave a comment</button>
+            {{ form_end(formComment) }}
+
+        </div>
         <hr>
-        <p>Display comments</p>
+        <div>
+            {% for comment in trick.comments %}
+                {{comment.content}}
+            {% endfor %}
+        </div>
     </div>
     
 
