@@ -32,7 +32,7 @@
                     {{form_row(formTrick.groupTrick)}}
                     <div id="buttons_form">
                         {% if editMode %}
-                            <a href="#" class="btn btn-danger">Delete</a>
+                            <a href="delete" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">Delete</a>
                             <button type="submit" class="btn btn-primary">Save</button>
                         {% else %}
                             <button type="submit" class="btn btn-primary">Create</button>
@@ -42,6 +42,9 @@
             </div>
         </div>
     </div>
+    {{ include('tricks/modalDeleteTrick.html.twig') }}
+{% endblock body %}
 
-    
-{% endblock %}
+{% block javascripts %}
+    <script src={{ asset('js/modalDeleteTrick.js')}}></script>
+{% endblock javascripts %}
