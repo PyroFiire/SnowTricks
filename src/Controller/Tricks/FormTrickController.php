@@ -5,7 +5,10 @@ namespace App\Controller\Tricks;
 use Twig\Environment;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -17,6 +20,11 @@ use App\Form\TrickType;
 
 class FormTrickController
 {
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $router;
+
     /**
      * @var Environment
      */
@@ -38,12 +46,14 @@ class FormTrickController
     private $trickRepository;
 
     public function __construct(
+        UrlGeneratorInterface $router,
         Environment $twig,
         FormFactoryInterface $form,
         EntityManagerInterface $manager,
         TrickRepository $trickRepository
     )
     {
+        $this->router = $router;
         $this->twig = $twig;
         $this->trickRepository = $trickRepository;
         $this->manager = $manager;
@@ -77,9 +87,10 @@ class FormTrickController
             $this->manager->persist($trick);
             $this->manager->flush();
 
-            return $this->redirectToRoute('trick_show', [
-                'slug' => $trick->getSlug()
-            ]);
+            return new RedirectResponse($this->router->generate(
+                'trick_show',
+                ['slug' => $trick->getSlug()]
+            ));
         }
 
         return new Response($this->twig->render(

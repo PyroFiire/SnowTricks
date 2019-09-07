@@ -5,6 +5,8 @@ namespace App\Controller\Tricks;
 use Twig\Environment;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,6 +21,11 @@ use App\Form\CommentType;
 
 class TrickShowController
 {
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $router;
+    
     /**
      * @var Environment
      */
@@ -45,6 +52,7 @@ class TrickShowController
     private $commentRepository;
 
     public function __construct(
+        UrlGeneratorInterface $router,
         Environment $twig,
         FormFactoryInterface $form,
         EntityManagerInterface $manager,
@@ -53,6 +61,7 @@ class TrickShowController
         CommentRepository $commentRepository
     )
     {
+        $this->router = $router;
         $this->twig = $twig;
         $this->form = $form;
         $this->manager = $manager;
@@ -80,7 +89,10 @@ class TrickShowController
             $this->manager->persist($comment);
             $this->manager->flush();
 
-            return new RedirectResponse($request->getUri());
+            return new RedirectResponse($this->router->generate(
+                'trick_show',
+                ['slug' => $trick->getSlug()]
+            ));
         }
 
         return new Response($this->twig->render(
