@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
  
-use App\Entity\GroupTrick;
 use App\Entity\Trick;
 use App\Entity\Comment;
+use App\Entity\GroupTrick;
 
 return [
     GroupTrick::class => [
@@ -15,7 +15,7 @@ return [
     Trick::class => [
         'trick{1..30}' => [
             'title' => $title = '<text(50)>',
-            'slug' => $slug = str_replace(" ", "_", $title),
+            'slug' => '$title',
             'description' => '<text(1000)>',
             'createdAt' => $createdAt = '<dateTimeBetween("-200 days", "now")>',
             'modifiedAt' => '<dateTimeBetween($createdAt, "now")>',

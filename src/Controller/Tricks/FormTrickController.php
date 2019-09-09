@@ -77,7 +77,7 @@ class FormTrickController
         $formTrick->handleRequest($request);
 
         if($formTrick->isSubmitted() && $formTrick->isValid()){
-            $trick->setSlug(str_replace(" ", "_", $trick->getTitle()));
+            $trick->setSlug($trick->getTitle());
             if(!$trick->getCreatedAt()){
                 $trick->setCreatedAt(new \DateTime());
             }else{

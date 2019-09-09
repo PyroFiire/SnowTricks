@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
  * @UniqueEntity("title")
+ * @UniqueEntity("slug")
  */
 class Trick
 {
@@ -82,10 +83,9 @@ class Trick
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(string $title): self
     {
-        $this->slug = $slug;
-
+        $this->slug = str_replace(" ", "_", $title);
         return $this;
     }
 
