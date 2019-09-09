@@ -86,6 +86,7 @@ class Trick
     public function setSlug(string $title): self
     {
         $this->slug = str_replace(" ", "_", $title);
+        $this->slug = preg_replace('#[^a-zA-Z0-9éèàç@€ù\s!,._-]#','!', $this->slug);
         return $this;
     }
 
