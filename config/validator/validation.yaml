@@ -12,3 +12,22 @@ App\Entity\Comment:
     properties:
         content:
             - NotBlank: ~
+
+App\Entity\User:
+    properties:
+        username:
+            - Length:
+                min: 3
+                max: 255
+        email:
+            - NotBlank: ~
+            - Email: ~
+            - Length:
+                max: 255
+        password:
+            - Length:
+                min: 8
+                max: 255
+            - NotEqualTo:
+                propertyPath: "username"
+                message: "The password should not be equal to username."

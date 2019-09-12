@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <h1>Registration</h1>
+        {{ form_start(formRegistration) }}
+            {{form_row(formRegistration.username)}}
+            {{form_row(formRegistration.email)}}
+            {{form_row(formRegistration.password)}}
+            <button type="submit" class="btn btn-primary">Create an account</button>
+        {{ form_end(formRegistration) }}
+        <a href="{{ path('trick_login') }}">Already an account ?</a>
+    </div>
+{% endblock body %}
