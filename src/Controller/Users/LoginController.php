@@ -6,7 +6,6 @@ use Twig\Environment;
 
 use App\Form\LoginType;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,7 +46,7 @@ class LoginController
     /**
      * @Route("/login", name="user_login")
      */
-    public function login(Request $request, AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

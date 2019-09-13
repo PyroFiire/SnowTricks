@@ -4,6 +4,11 @@ App\Entity\User:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
     properties:
         username:
+            - NotBlank: ~
+            - Regex:
+                pattern: '/[@]/'
+                match:   false
+                message: "Sorry, you can't use '@' in your username"
             - Length:
                 min: 3
                 max: 255
@@ -13,6 +18,7 @@ App\Entity\User:
             - Length:
                 max: 255
         password:
+            - NotBlank: ~
             - Length:
                 min: 8
                 max: 255
