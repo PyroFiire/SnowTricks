@@ -8,14 +8,16 @@
         <figure>
             <img id="spotlight_picture" src="https://via.placeholder.com/400x200"  alt="...">
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
-            <div id="picture_buttons" class="d-flex flex-row">
-                <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class"card-link" style="margin-right:15px">
-                    <i class="fas fa-pencil-alt fa-2x"></i>
-                </a>
-                <a href="delete" class"card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
-                    <i class="fas fa-trash-alt fa-2x"></i>
-                </a>
-            </div>
+            {% if app.user %}
+                <div id="picture_buttons" class="d-flex flex-row">
+                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class"card-link" style="margin-right:15px">
+                        <i class="fas fa-pencil-alt fa-2x"></i>
+                    </a>
+                    <a href="delete" class"card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
+                        <i class="fas fa-trash-alt fa-2x"></i>
+                    </a>
+                </div>
+            {% endif %}
         </figure>
         <p>Display Medias</p>
         <p id="description">{{trick.description}}</p>
@@ -27,15 +29,16 @@
             {% endif %}
         </div>
         <hr>
-        <div id="comment_form_div" class="col-12 col-md-11 col-lg-10 col-xl-9">
-            {{ form_start(formComment, {'attr': {'novalidate': 'novalidate'}}) }}
-                {{ form_errors(formComment.content) }}
-                {{ form_widget(formComment.content) }}
-                <button type="submit" class="btn btn-primary">Leave a comment</button>
-            {{ form_end(formComment) }}
-
-        </div>
-        <hr>
+        {% if app.user %}
+            <div id="comment_form_div" class="col-12 col-md-11 col-lg-10 col-xl-9">
+                {{ form_start(formComment, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_errors(formComment.content) }}
+                    {{ form_widget(formComment.content) }}
+                    <button type="submit" class="btn btn-primary">Leave a comment</button>
+                {{ form_end(formComment) }}
+            </div>
+            <hr>
+        {% endif %}
         <div id="comments" class="row justify-content-center">
             {% for comment in trick.comments %}
                 <div class="comment col-12 col-md-10 col-lg-9">

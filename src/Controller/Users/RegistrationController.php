@@ -80,8 +80,7 @@ class RegistrationController
             $this->manager->flush();
 
             return new RedirectResponse($this->router->generate(
-                'user_login',
-                []
+                'index'
             ));
         }
 
