@@ -28,7 +28,7 @@
         </div>
         <hr>
         <div id="comment_form_div" class="col-12 col-md-11 col-lg-10 col-xl-9">
-            {{ form_start(formComment) }}
+            {{ form_start(formComment, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{ form_errors(formComment.content) }}
                 {{ form_widget(formComment.content) }}
                 <button type="submit" class="btn btn-primary">Leave a comment</button>

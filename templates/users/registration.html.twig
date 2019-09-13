@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container">
         <h1>Registration</h1>
-        {{ form_start(formRegistration) }}
+        {{ form_start(formRegistration, {'attr': {'novalidate': 'novalidate'}}) }}
             {{form_row(formRegistration.username)}}
             {{form_row(formRegistration.email)}}
             {{form_row(formRegistration.password)}}

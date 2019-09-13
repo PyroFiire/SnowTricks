@@ -26,7 +26,7 @@
         <p>Display Medias</p>
         <div class="row">
             <div id="form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
-                {{ form_start(formTrick) }}
+                {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
                     {{form_row(formTrick.title)}}
                     {{form_row(formTrick.description)}}
                     {{form_row(formTrick.groupTrick)}}

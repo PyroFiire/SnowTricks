@@ -7,15 +7,17 @@ use App\Form\RegistrationType;
 
 use Twig\Environment;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+use Doctrine\ORM\EntityManagerInterface;
 
 class RegistrationController
 {
@@ -33,6 +35,11 @@ class RegistrationController
      * @var FormFactoryInterface
      */
     private $form;
+
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
     
     /**
      * @var EntityManagerInterface
@@ -43,12 +50,14 @@ class RegistrationController
         UrlGeneratorInterface $router,
         Environment $twig,
         FormFactoryInterface $form,
+        UserPasswordEncoderInterface $passwordEncoder,
         EntityManagerInterface $manager
     )
     {
         $this->router = $router;
         $this->twig = $twig;
         $this->form = $form;
+        $this->passwordEncoder = $passwordEncoder;
         $this->manager = $manager;
     }
 
@@ -63,11 +72,9 @@ class RegistrationController
 
         if($formRegistration->isSubmitted() && $formRegistration->isValid()){
  
-            //set
-            //$user->setPassword();
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
             //$user->setActiveToken
             $user->setActive(false);
-            
             $user->setPicturePath('default_avatar.jpg');
             $this->manager->persist($user);
             $this->manager->flush();
