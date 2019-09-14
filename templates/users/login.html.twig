@@ -12,10 +12,7 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <button type="submit" class="btn btn-primary">Login</button>
             {% if error %}
-                <p class="text-danger">incorrect credentials, try again !</p>
-                {% if app.environment == 'dev' %}
-                    <p>ERROR IN DEV ENVIRONMENT : {{ error.messageKey|trans(error.messageData, 'security') }}</p>
-                {% endif %}
+                <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }} </p>
             {% endif %}
         {{ form_end(formLogin) }}
         <a href="{{ path('user_registration') }}">Register</a>
