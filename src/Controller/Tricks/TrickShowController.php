@@ -56,7 +56,6 @@ class TrickShowController
         Environment $twig,
         FormFactoryInterface $form,
         EntityManagerInterface $manager,
-        //Comment $comment,
         TrickRepository $trickRepository,
         CommentRepository $commentRepository
     )
@@ -65,13 +64,12 @@ class TrickShowController
         $this->twig = $twig;
         $this->form = $form;
         $this->manager = $manager;
-        //$this->comment = $comment;
         $this->trickRepository = $trickRepository;
         $this->commentRepository = $commentRepository;
     }
 
     /**
-     * @Route("/tricks/{slug}", name="trick_show")
+     * @Route("/tricks/show/{slug}", name="trick_show")
      */
     public function trick_show(Request $request)
     {
@@ -82,7 +80,7 @@ class TrickShowController
         $formComment->handleRequest($request);
 
         if($formComment->isSubmitted() && $formComment->isValid()){
-            
+
             $comment->setCreatedAt(new \DateTime());
             $comment->setTrick($trick);
             

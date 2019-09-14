@@ -41,7 +41,7 @@ class DeleteTrickController
     }
 
     /**
-     * @Route("/tricks/{slug}/delete", name="trick_delete")
+     * @Route("/tricks/delete/{slug}", name="trick_delete")
      */
     public function trickDelete(Request $request)
     {
