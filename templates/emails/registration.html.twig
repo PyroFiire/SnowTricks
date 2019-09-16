@@ -3,7 +3,7 @@
 <hr>
 <p>Hi {{ username }}! You're successfully registered. 
     {# example, assuming you have a route named "login" #}
-    <a href="{{ url('index') }}">Click here to activate your account</a>.
+    <a href="{{ url('user_activeAccount') }}?username={{ username }}&activeToken={{ activeToken }}">Click here to activate your account</a>.
 </p>
 <hr>
 <p>SnowTrick thanks you for your registration ! see you soon !</p>

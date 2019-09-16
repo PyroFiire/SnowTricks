@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Security\TokenSecurity;
 
 
 class RegistrationController
@@ -44,6 +45,11 @@ class RegistrationController
      * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
+
+    /**
+     * @var TokenSecurity
+     */
+    private $tokenSecurity;
     
     /**
      * @var EntityManagerInterface
@@ -55,7 +61,8 @@ class RegistrationController
         Environment $twig,
         FormFactoryInterface $form,
         UserPasswordEncoderInterface $passwordEncoder,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        TokenSecurity $tokenSecurity
     )
     {
         $this->router = $router;
@@ -63,13 +70,14 @@ class RegistrationController
         $this->form = $form;
         $this->passwordEncoder = $passwordEncoder;
         $this->manager = $manager;
+        $this->tokenSecurity = $tokenSecurity;
     }
 
     /**
      * @Route("/registration", name="user_registration")
      */
     public function registration(Request $request, MailerInterface $mailer)
-    {
+    {   
         $formRegistration = $this->form->create(RegistrationType::class, $user = new User());
 
         $formRegistration->handleRequest($request);
@@ -77,21 +85,18 @@ class RegistrationController
         if($formRegistration->isSubmitted() && $formRegistration->isValid()){
  
             $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
-            //$user->setActiveToken
             $user->setActive(false);
+            $user->setActiveToken($this->tokenSecurity->generateToken());
             $user->setPicturePath('default_avatar.jpg');
 
             $email = (new TemplatedEmail())
                 ->from('christophe.guinot@hotmail.fr')
                 ->to('christophe.guinot@hotmail.fr')
                 ->subject('Active your account !')
-
-                // path of the Twig template to render
                 ->htmlTemplate('emails/registration.html.twig')
-
-                // pass variables (name => value) to the template
                 ->context([
                     'username' => $user->getUsername(),
+                    'activeToken' => $user->getActiveToken()
                 ])
             ;
             
@@ -110,4 +115,5 @@ class RegistrationController
             'formRegistration' => $formRegistration->createView(),
         ]));
     }
+
 }
