@@ -90,7 +90,7 @@ class ResetPasswordController
             $this->manager->flush();
 
             return new RedirectResponse($this->router->generate(
-                'user_login'
+                'index'
             ));
         }
         return new Response($this->twig->render(
