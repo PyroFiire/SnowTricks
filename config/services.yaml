@@ -25,3 +25,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # redirect mail in your email adresse for developpement
+    mailer.dev.set_recipients:
+        class: Symfony\Component\Mailer\EventListener\EnvelopeListener
+        tags: ['kernel.event_subscriber']
+        arguments:
+            $sender: null
+            $recipients: ['christophe.guinot@hotmail.fr']

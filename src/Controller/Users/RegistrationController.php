@@ -90,8 +90,8 @@ class RegistrationController
             $user->setPicturePath('default_avatar.jpg');
 
             $email = (new TemplatedEmail())
-                ->from('christophe.guinot@hotmail.fr')
-                ->to('christophe.guinot@hotmail.fr')
+                ->from('snowtrick11@gmail.com')
+                ->to($user->getEmail())
                 ->subject('Active your account !')
                 ->htmlTemplate('emails/registration.html.twig')
                 ->context([
