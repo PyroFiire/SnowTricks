@@ -1,6 +1,6 @@
 /********** BACKGROUND *************/
 #base_content{
-    background-image: url("../image/snowboarding-3554x1999.jpg");
+    background-image: url("../picture/snowboarding-3554x1999.jpg");
     background-repeat: no-repeat;
 }
 @media all and (min-width: 0px) /* Extra small */   {#base_content{background-size: 100% 50%;

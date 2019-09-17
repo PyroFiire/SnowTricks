@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock title %}
+{% block stylesheets %}<link href={{ asset('css/formUser.css') }} type="text/css" rel="stylesheet">{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div>
+            <h1>Login</h1>
+            {{ form_start(formLogin, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{form_row(formLogin.username, {'full_name':'_username', 'attr': {'value': last_username}, 'label':"Username or Email" })}}
+                {{form_row(formLogin.password, {'full_name':'_password'})}}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    {% if error %}
+                        <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }} </p>
+                    {% endif %}
+                </div>
+            {{ form_end(formLogin) }}
+            <a href="{{ path('user_registration') }}">Register</a>
+            <a href="{{ path('user_forgotPassword') }}">Forgot password ?</a>
+        </div>
+    </div>
+{% endblock body %}

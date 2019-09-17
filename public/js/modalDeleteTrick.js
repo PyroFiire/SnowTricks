@@ -7,5 +7,5 @@ $('#modalDeleteTrick').on('show.bs.modal', function (event) {
     var modal = $(this)
     modal.find('.modal-body').text('Are you sure to remove \"' + title + '\"')
     var modal2 = $(this)
-    modal2.find('.modal-footer a').attr('href', '/tricks/' + slug + '/delete')
+    modal2.find('.modal-footer a').attr('href', '/tricks/delete/' + slug)
 })

@@ -1,0 +1,4 @@
+App\Entity\Comment:
+    properties:
+        content:
+            - NotBlank: ~

@@ -1,0 +1,27 @@
+App\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: username
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        username:
+            - NotBlank: ~
+            - Regex:
+                pattern: '/[@]/'
+                match:   false
+                message: "Sorry, you can't use '@' in your username"
+            - Length:
+                min: 3
+                max: 255
+        email:
+            - NotBlank: ~
+            - Email: ~
+            - Length:
+                max: 255
+        password:
+            - NotBlank: ~
+            - Length:
+                min: 8
+                max: 255
+            - NotEqualTo:
+                propertyPath: "username"
+                message: "The password should not be equal to username."

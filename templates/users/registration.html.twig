@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock title %}
+{% block stylesheets %}<link href={{ asset('css/formUser.css') }} type="text/css" rel="stylesheet">{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div>
+            <h1>Registration</h1>
+            {{ form_start(formRegistration, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{form_row(formRegistration.username)}}
+                {{form_row(formRegistration.email)}}
+                {{form_row(formRegistration.password)}}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create an account</button>
+                </div>
+            {{ form_end(formRegistration) }}
+            <a href="{{ path('user_login') }}">Already an account ?</a>
+        </div>
+    </div>
+{% endblock body %}

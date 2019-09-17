@@ -1,0 +1,15 @@
+App\Entity\Trick:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
+    properties:
+        title:
+            - NotBlank: ~
+            - Regex:
+                pattern: '/[a-zA-Z0-9éèàç@€ù\s!,.-]/'
+                match:   true
+                message: Please, don't use special caracters
+            - Length:
+                min: 3
+                max: 255
+        description:
+            - NotBlank: ~

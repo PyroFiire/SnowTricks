@@ -61,8 +61,8 @@ class FormTrickController
     }
 
     /**
-     * @Route("/tricks/create", name="trick_create")
-     * @Route("/tricks/{slug}/edit", name="trick_edit")
+     * @Route("/tricks/create/", name="trick_create")
+     * @Route("/tricks/edit/{slug}", name="trick_edit")
      */
     public function formTrick(Request $request)
     {
