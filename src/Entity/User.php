@@ -47,6 +47,11 @@ class User implements UserInterface
      */
     private $picturePath;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ForgotPasswordToken;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,4 +135,16 @@ class User implements UserInterface
     }
     public function getSalt(){}
     public function eraseCredentials(){}
+
+    public function getForgotPasswordToken(): ?string
+    {
+        return $this->ForgotPasswordToken;
+    }
+
+    public function setForgotPasswordToken(?string $ForgotPasswordToken): self
+    {
+        $this->ForgotPasswordToken = $ForgotPasswordToken;
+
+        return $this;
+    }
 }
