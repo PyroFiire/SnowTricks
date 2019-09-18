@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Security\Core\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -42,6 +43,11 @@ class TrickShowController
     private $manager;
 
     /**
+     * @var Security
+     */
+    private $security;
+
+    /**
      * @var TrickRepository
      */
     private $trickRepository;
@@ -57,13 +63,15 @@ class TrickShowController
         FormFactoryInterface $form,
         EntityManagerInterface $manager,
         TrickRepository $trickRepository,
-        CommentRepository $commentRepository
+        CommentRepository $commentRepository,
+        Security $security
     )
     {
         $this->router = $router;
         $this->twig = $twig;
         $this->form = $form;
         $this->manager = $manager;
+        $this->security = $security;
         $this->trickRepository = $trickRepository;
         $this->commentRepository = $commentRepository;
     }
@@ -83,6 +91,7 @@ class TrickShowController
 
             $comment->setCreatedAt(new \DateTime());
             $comment->setTrick($trick);
+            $comment->setUser($this->security->getUser());
             
             $this->manager->persist($comment);
             $this->manager->flush();
