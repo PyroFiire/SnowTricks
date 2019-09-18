@@ -42,9 +42,9 @@
         <div id="comments" class="row justify-content-center">
             {% for comment in trick.comments %}
                 <div class="comment col-12 col-md-10 col-lg-9">
-                    <img src="https://via.placeholder.com/100x100"  alt="...">
+                    <img src="{{asset('picture/avatars/' ~ comment.user.picturePath) }}"  alt="{{comment.user.username}}'s avatar">
                     <div>
-                        <strong>Name</strong>
+                        <strong>{{comment.user.username}}</strong>
                         <p>{{comment.content}}</p>
                         <small>the {{comment.createdAt|date("Y/m/d \\a\\t h:i a") }}</small>
                     </div>
