@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -134,10 +135,9 @@ class User implements UserInterface
         return $this->picturePath;
     }
 
-    public function setPicturePath(string $picturePath): self
+    public function setPicturePath(string $picturePath = null): self
     {
         $this->picturePath = $picturePath;
-
         return $this;
     }
 

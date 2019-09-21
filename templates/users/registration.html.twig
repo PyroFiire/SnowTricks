@@ -11,6 +11,7 @@
                 {{form_row(formRegistration.username)}}
                 {{form_row(formRegistration.email)}}
                 {{form_row(formRegistration.password)}}
+                {{form_row(formRegistration.picturePath , {'label':"Avatar jpeg/png image"})}}
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Create an account</button>
                 </div>
@@ -19,3 +20,6 @@
         </div>
     </div>
 {% endblock body %}
+{% block javascripts %}
+    <script src={{ asset('js/customInputFile.js')}}></script>
+{% endblock %}

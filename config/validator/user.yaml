@@ -25,3 +25,8 @@ App\Entity\User:
             - NotEqualTo:
                 propertyPath: "username"
                 message: "The password should not be equal to username."
+        picturePath:
+            - File:
+                maxSize: 1024k
+                mimeTypes: [image/png, image/jpeg]
+            - Image:
