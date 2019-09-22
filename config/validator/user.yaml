@@ -11,12 +11,12 @@ App\Entity\User:
                 message: "Sorry, you can't use '@' in your username"
             - Length:
                 min: 3
-                max: 255
+                max: 30
         email:
             - NotBlank: ~
             - Email: ~
             - Length:
-                max: 255
+                max: 50
         password:
             - NotBlank: ~
             - Length:

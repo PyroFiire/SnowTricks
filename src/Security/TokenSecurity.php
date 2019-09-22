@@ -12,6 +12,6 @@ class TokenSecurity
      */
     public function generateToken()
     {
-        return password_hash(random_bytes(10), PASSWORD_DEFAULT);
+        return str_replace('_','', password_hash(random_bytes(10), PASSWORD_DEFAULT));
     }
 }

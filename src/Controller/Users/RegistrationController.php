@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Security\TokenSecurity;
-
+use Psr\Container\ContainerInterface;
 
 class RegistrationController
 {
@@ -30,6 +30,11 @@ class RegistrationController
      * @var UrlGeneratorInterface
      */
     private $router;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
 
     /**
      * @var Environment
@@ -62,7 +67,8 @@ class RegistrationController
         FormFactoryInterface $form,
         UserPasswordEncoderInterface $passwordEncoder,
         EntityManagerInterface $manager,
-        TokenSecurity $tokenSecurity
+        TokenSecurity $tokenSecurity,
+        ContainerInterface $container
     )
     {
         $this->router = $router;
@@ -71,6 +77,7 @@ class RegistrationController
         $this->passwordEncoder = $passwordEncoder;
         $this->manager = $manager;
         $this->tokenSecurity = $tokenSecurity;
+        $this->container = $container;
     }
 
     /**
@@ -81,14 +88,12 @@ class RegistrationController
         $formRegistration = $this->form->create(RegistrationType::class, $user = new User());
 
         $formRegistration->handleRequest($request);
-
+        
         if($formRegistration->isSubmitted() && $formRegistration->isValid()){
- 
+
             $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
             $user->setActive(false);
             $user->setActiveToken($this->tokenSecurity->generateToken());
-            $user->setPicturePath('default_avatar.jpg');
-
             $email = (new TemplatedEmail())
                 ->from('snowtrick11@gmail.com')
                 ->to($user->getEmail())
