@@ -46,7 +46,7 @@ class User implements UserInterface
     private $activeToken;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $picturePath;
 

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Account{% endblock title %}
+{% block stylesheets %}<link href={{ asset('css/formUser.css') }} type="text/css" rel="stylesheet">{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div>
+            <h1>My Account</h1>
+            <div class="form-group">
+                <label>Username</label>
+                <p class="form-control no-change">{{app.user.username}}</p>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <p class="form-control no-change">{{app.user.email}}</p>
+            </div>
+            <hr>
+            {{ form_start(formResetPassword, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{form_row(formResetPassword.password, {'label':"Current Password"})}}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </div>
+            {{ form_end(formResetPassword) }}
+            <hr>
+            {% if not form_errors(formAvatar.picturePath) and app.user.picturePath is not null %}
+                <img src="{{asset('picture/avatars/' ~ app.user.id ~ '/' ~ app.user.picturePath) }}"  alt="{{app.user.username}}'s avatar">
+            {% endif %}
+            {{ form_start(formAvatar, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{form_row(formAvatar.picturePath , {'label':"Avatar"})}}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Change Avatar</button>
+                    {% if form_errors(formAvatar.picturePath) %}
+                        <button type="button" onclick="location.href='{{ path("user_myAccount") }}'" class="btn btn-danger">No change</button>
+                    {% endif %}
+                </div>
+            {{ form_end(formAvatar) }}
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    <script src={{ asset('js/customInputFile.js')}}></script>
+{% endblock %}

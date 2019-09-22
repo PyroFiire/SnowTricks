@@ -34,6 +34,7 @@ security:
     access_control:
         # ROLE_USER
         - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/myAccount, roles: ROLE_USER }
         - { path: ^/tricks/create/, roles: ROLE_USER }
         - { path: ^/tricks/edit/, roles: ROLE_USER }
         - { path: ^/tricks/delete/, roles: ROLE_USER }

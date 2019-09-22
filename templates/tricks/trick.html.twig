@@ -42,7 +42,11 @@
         <div id="comments" class="row justify-content-center">
             {% for comment in trick.comments %}
                 <div class="comment col-12 col-md-10 col-lg-9">
-                    <img src="{{asset('picture/avatars/' ~ comment.user.picturePath) }}"  alt="{{comment.user.username}}'s avatar">
+                    {% if comment.user.picturePath is not null %}
+                        <img src="{{asset('picture/avatars/' ~ comment.user.id ~ '/' ~ comment.user.picturePath) }}"  alt="{{comment.user.username}}'s avatar">
+                    {% else %}
+                        <img src="{{asset('picture/default_avatar.jpg')}}"  alt="{{comment.user.username}}'s avatar">
+                    {% endif %}
                     <div>
                         <strong>{{comment.user.username}}</strong>
                         <p>{{comment.content}}</p>

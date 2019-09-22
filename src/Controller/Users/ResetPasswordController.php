@@ -80,12 +80,11 @@ class ResetPasswordController
         
         $formResetPassword = $this->form->create(ResetPasswordType::class, $user);
         $formResetPassword->handleRequest($request);
-
         if($formResetPassword->isSubmitted() && $formResetPassword->isValid()){
 
             $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
             $user->setForgotPasswordToken(null);
-
+            
             $this->manager->persist($user);
             $this->manager->flush();
 

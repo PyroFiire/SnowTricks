@@ -94,21 +94,6 @@ class RegistrationController
             $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
             $user->setActive(false);
             $user->setActiveToken($this->tokenSecurity->generateToken());
-
-            $picturePath = $formRegistration['picturePath']->getData();
-            if ($picturePath) {
-                $fileName = uniqid().'.'.$picturePath->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $picturePath->move($this->container->getParameter('avatars_directory'), $fileName );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                $user->setPicturePath($fileName);
-            }
-
             $email = (new TemplatedEmail())
                 ->from('snowtrick11@gmail.com')
                 ->to($user->getEmail())
