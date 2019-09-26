@@ -59,6 +59,16 @@ class LoadFixtures extends Fixture
         $this->filesystem->remove([$this->container->getParameter('avatars_directory')]);
         $this->filesystem->mkdir($this->container->getParameter('avatars_directory'));
 
+        //create toto user for test
+        $user = new User;
+        $user->setUsername('toto')
+                ->setEmail('toto@mail.fr')
+                ->setPassword($this->passwordEncoder->encodePassword($user, 'totototo'))
+                ->setActive(true)
+        ;
+        $manager->persist($user);
+        $users[] = $user;
+
         for($i = 1; $i <= 30; $i++){
             $user = new User;
             $user->setUsername($faker->firstName())
