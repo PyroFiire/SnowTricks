@@ -2,21 +2,23 @@
 
 namespace App\Controller\Tricks;
 
-use Twig\Environment;
-
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormFactoryInterface;
-
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Media;
 
 use App\Entity\Trick;
-use App\Repository\TrickRepository;
+use Twig\Environment;
+
 use App\Form\TrickType;
+use App\Repository\TrickRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+use Symfony\Component\HttpFoundation\Response;
+
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class FormTrickController
 {
@@ -71,11 +73,24 @@ class FormTrickController
         if(!$trick){
             $trick = new Trick();
         }
+        dump($trick);
+/*
+        $media1 = new Media();
+        $media1->setType('')
+               ->setPath('')
+               ->setCreatedAt(new \DateTime());
+        $trick->addMedia($media1);
 
+
+        $originalMedias = new ArrayCollection();
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($trick->getMedias() as $media) {
+            $originalMedias->add($media);
+        }
+*/
         $formTrick = $this->form->create(TrickType::class, $trick);
-
         $formTrick->handleRequest($request);
-
+        dump($trick);
         if($formTrick->isSubmitted() && $formTrick->isValid()){
             $trick->setSlug($trick->getTitle());
             if(!$trick->getCreatedAt()){
@@ -83,7 +98,13 @@ class FormTrickController
             }else{
                 $trick->setModifiedAt(new \DateTime());
             }
+            foreach ($trick->getMedias() as $media) {
 
+                $media->setCreatedAt(new \DateTime());
+                $trick->addMedia($media);
+
+            }
+            dump($trick);
             $this->manager->persist($trick);
             $this->manager->flush();
 
@@ -99,6 +120,7 @@ class FormTrickController
             'formTrick' => $formTrick->createView(),
             'editMode' => $trick->getCreatedAt() !== null
         ]));
+
     }
 
 }

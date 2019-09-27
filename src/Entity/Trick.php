@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,9 +53,20 @@ class Trick
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="trick", cascade = {"persist"})
+     */
+    private $medias;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $spotlightPicturePath;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,4 +174,48 @@ class Trick
 
         return $this;
     }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+            $media->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
+            // set the owning side to null (unless already changed)
+            if ($media->getTrick() === $this) {
+                $media->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSpotlightPicturePath(): ?string
+    {
+        return $this->spotlightPicturePath;
+    }
+
+    public function setSpotlightPicturePath(?string $spotlightPicturePath): self
+    {
+        $this->spotlightPicturePath = $spotlightPicturePath;
+
+        return $this;
+    }
+
 }

@@ -118,8 +118,10 @@ class MyAccountController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
+
                 $user->setPicturePath($newFileName);
             
+
 
             $this->manager->persist($user);
             $this->manager->flush();
