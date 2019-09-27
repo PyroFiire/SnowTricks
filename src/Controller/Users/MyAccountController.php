@@ -121,8 +121,6 @@ class MyAccountController
 
                 $user->setPicturePath($newFileName);
             
-
-
             $this->manager->persist($user);
             $this->manager->flush();
 

@@ -6,7 +6,7 @@
 {% block body %}
     <div id="trick" class="container">
         <figure>
-            <img id="spotlight_picture" src="https://via.placeholder.com/400x200"  alt="...">
+            <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="...">
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             {% if app.user %}
                 <div id="picture_buttons" class="d-flex flex-row">

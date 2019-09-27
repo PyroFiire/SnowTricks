@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
@@ -62,6 +63,11 @@ class Trick
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $spotlightPicturePath;
+
+    /**
+     * use this for formType and use spotlightPicturePath for persist
+     */
+    private $fileSpotlightPicturePath;
 
     public function __construct()
     {
@@ -214,6 +220,18 @@ class Trick
     public function setSpotlightPicturePath(?string $spotlightPicturePath): self
     {
         $this->spotlightPicturePath = $spotlightPicturePath;
+
+        return $this;
+    }
+
+    public function getFileSpotlightPicturePath(): ?File
+    {
+        return $this->fileSpotlightPicturePath;
+    }
+
+    public function setFileSpotlightPicturePath(?File $fileSpotlightPicturePath): self
+    {
+        $this->fileSpotlightPicturePath = $fileSpotlightPicturePath;
 
         return $this;
     }
