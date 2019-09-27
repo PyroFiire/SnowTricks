@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,9 +54,14 @@ class Trick
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="trick", cascade = {"persist"})
      */
     private $medias;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $spotlightPicturePath;
 
     public function __construct()
     {
@@ -202,4 +205,17 @@ class Trick
 
         return $this;
     }
+
+    public function getSpotlightPicturePath(): ?string
+    {
+        return $this->spotlightPicturePath;
+    }
+
+    public function setSpotlightPicturePath(?string $spotlightPicturePath): self
+    {
+        $this->spotlightPicturePath = $spotlightPicturePath;
+
+        return $this;
+    }
+
 }
