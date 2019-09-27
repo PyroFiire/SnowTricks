@@ -24,7 +24,7 @@
             {{ form_end(formResetPassword) }}
             <hr>
             {% if not form_errors(formAvatar.picturePath) and app.user.picturePath is not null %}
-                <img src="{{asset('picture/avatars/' ~ app.user.id ~ '/' ~ app.user.picturePath) }}"  alt="{{app.user.username}}'s avatar">
+                <img src="{{asset('picture/avatars/' ~ app.user.picturePath) }}"  alt="{{app.user.username}}'s avatar">
             {% endif %}
             {{ form_start(formAvatar, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{form_row(formAvatar.picturePath , {'label':"Avatar"})}}

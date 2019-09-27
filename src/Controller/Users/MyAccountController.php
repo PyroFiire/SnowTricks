@@ -96,7 +96,10 @@ class MyAccountController
      */
     public function myAccount(Request $request)
     {
-        $formAvatar = $this->form->create(AvatarType::class, $user = $this->security->getUser());
+        $user = $this->security->getUser();
+        $lastPathAvatar = $user->getPicturePath();
+
+        $formAvatar = $this->form->create(AvatarType::class, $user);
         $formResetPassword = $this->form->create(ResetPasswordType::class);
 
         $formAvatar->handleRequest($request);
@@ -104,19 +107,21 @@ class MyAccountController
         
         if($formAvatar->isSubmitted() && $formAvatar->isValid()){
 
-            $picturePath = $formAvatar['picturePath']->getData();
+            $newPicturePath = $formAvatar['picturePath']->getData();
 
-                $fileName = $user->getId().'.'.$picturePath->guessExtension();
+                $newFileName = uniqid().'.'.$newPicturePath->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $this->filesystem->remove([$this->container->getParameter('avatars_directory').'/'.$user->getId()]);
-                    $this->filesystem->mkdir($this->container->getParameter('avatars_directory').'/'.$user->getId());
-                    $picturePath->move($this->container->getParameter('avatars_directory').'/'.$user->getId(), $fileName );
+                    $this->filesystem->remove([$this->container->getParameter('avatars_directory').'/'.$lastPathAvatar]);
+                    $newPicturePath->move($this->container->getParameter('avatars_directory'), $newFileName );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-                $user->setPicturePath($fileName);
+
+                $user->setPicturePath($newFileName);
+            
+
 
             $this->manager->persist($user);
             $this->manager->flush();

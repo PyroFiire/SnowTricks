@@ -43,7 +43,7 @@
             {% for comment in trick.comments %}
                 <div class="comment col-12 col-md-10 col-lg-9">
                     {% if comment.user.picturePath is not null %}
-                        <img src="{{asset('picture/avatars/' ~ comment.user.id ~ '/' ~ comment.user.picturePath) }}"  alt="{{comment.user.username}}'s avatar">
+                        <img src="{{asset('picture/avatars/' ~ comment.user.picturePath) }}"  alt="{{comment.user.username}}'s avatar">
                     {% else %}
                         <img src="{{asset('picture/default_avatar.jpg')}}"  alt="{{comment.user.username}}'s avatar">
                     {% endif %}
