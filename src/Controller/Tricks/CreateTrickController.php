@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
-class FormTrickController
+class CreateTrickController
 {
     /**
      * @var UrlGeneratorInterface
@@ -81,59 +81,37 @@ class FormTrickController
 
     /**
      * @Route("/tricks/create/", name="trick_create")
-     * @Route("/tricks/edit/{slug}", name="trick_edit")
      */
-    public function formTrick(Request $request)
+    public function createTrick(Request $request)
     {
-        $trick = $this->trickRepository->findOneBySlug($request->attributes->get('slug'));
-        
-        if($trick){
-            $lastSpotlightPicturePath = $trick->getSpotlightPicturePath();
-            
-        $fileSpotlightPicturePath = new File($this->container->getParameter('medias_directory').'/'.$trick->getSpotlightPicturePath());
-        $trick->setFileSpotlightPicturePath($fileSpotlightPicturePath);
-        
+       //$fileSpotlightPicturePath = new File($this->container->getParameter('medias_directory').'/'.$trick->getSpotlightPicturePath());
+        //$trick->setFileSpotlightPicturePath($fileSpotlightPicturePath);
+       
+        //dump($fileSpotlightPicturePath);
 
-        }else{
-            $trick = new Trick();
-            $lastSpotlightPicturePath = 'create';
-        }
 
-        $formTrick = $this->form->create(TrickType::class, $trick);
+        $formTrick = $this->form->create(TrickType::class, $trick = new Trick());
         $formTrick->handleRequest($request);
+
+
 
         if($formTrick->isSubmitted() && $formTrick->isValid()){
             $trick->setSlug($trick->getTitle());
-            if(!$trick->getCreatedAt()){
-                $trick->setCreatedAt(new \DateTime());
-            }else{
-                $trick->setModifiedAt(new \DateTime());
-            }
+            $trick->setCreatedAt(new \DateTime());
+            
+            $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
+
             foreach ($trick->getMedias() as $media) {
-
-                $media->setCreatedAt(new \DateTime());
                 $trick->addMedia($media);
-
             }
 
-            if($formTrick['fileSpotlightPicturePath']->getData()){
-                $newPicturePath = $formTrick['fileSpotlightPicturePath']->getData();
+            if($trick->getFileSpotlightPicturePath()){
+                try {
+                    $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
             }
-            elseif($trick->getFileSpotlightPicturePath()){
-                $newPicturePath = $trick->getFileSpotlightPicturePath();
-            }
-
-            $newFileName = uniqid().'.'.$newPicturePath->guessExtension();
-
-            // Move the file to the directory where brochures are stored
-            try {
-                $newPicturePath->move($this->container->getParameter('medias_directory'), $newFileName );
-                $this->filesystem->remove([$this->container->getParameter('medias_directory').'/'.$lastSpotlightPicturePath]);
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-            $trick->setSpotlightPicturePath($newFileName);
-            dump($trick);
             $this->manager->persist($trick);
             $this->manager->flush();
 
@@ -144,10 +122,9 @@ class FormTrickController
         }
 
         return new Response($this->twig->render(
-            'tricks/formTrick.html.twig', [
+            'tricks/createTrick.html.twig', [
             'trick' => $trick,
-            'formTrick' => $formTrick->createView(),
-            'editMode' => $trick->getCreatedAt() !== null
+            'formTrick' => $formTrick->createView()        
         ]));
 
     }

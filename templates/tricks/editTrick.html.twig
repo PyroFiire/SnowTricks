@@ -1,22 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    {% if editMode %}
-        Edit the Trick
-    {% else %}
-        Create your Trick
-    {% endif %}
-{% endblock %}
+{% block title %}Edit the Trick{% endblock %}
+
 {% block stylesheets %}<link href={{ asset('css/formTrick.css') }} type="text/css" rel="stylesheet">{% endblock %}
 
 {% block body %}
     <div id="trick" class="container">
         <figure>
-            {% if editMode %}
-                <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="...">
-            {% else %}
-                <img id="spotlight_picture" src="{{asset('picture/snowboarding-3554x1999.jpg') }}"  alt="...">
-            {% endif %}
+            <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="...">
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             <div id="picture_buttons" class="d-flex flex-row">
                 <a href="#" id="jsBtnUpload" class"card-link" style="margin-right:15px">
@@ -42,12 +33,8 @@
                     {{form_row(formTrick.description)}}
                     {{form_row(formTrick.groupTrick)}}
                     <div id="buttons_form">
-                        {% if editMode %}
-                            <a href="delete" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">Delete</a>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        {% else %}
-                            <button type="submit" class="btn btn-primary">Create</button>
-                        {% endif %}
+                        <a href="delete" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">Delete</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 {{ form_end(formTrick) }}
             </div>
@@ -57,11 +44,9 @@
 {% endblock body %}
 
 {% block javascripts %}
-    <script src={{ asset('js/mediasCollectionType.js')}}></script>
-    {% if editMode %}
-        <script src={{ asset('js/modalDeleteTrick.js')}}></script>
-    {% endif %}
+    <script src={{ asset('js/modalDeleteTrick.js')}}></script>
 
+    <script src={{ asset('js/mediasCollectionType.js')}}></script>
     <script>
         $("#jsBtnUpload").on('click', function(e){
         $('#trick_fileSpotlightPicturePath').click();

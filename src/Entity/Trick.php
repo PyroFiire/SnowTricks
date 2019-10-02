@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Psr\Container\ContainerInterface;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -64,9 +65,6 @@ class Trick
      */
     private $spotlightPicturePath;
 
-    /**
-     * use this for formType and use spotlightPicturePath for persist
-     */
     private $fileSpotlightPicturePath;
 
     public function __construct()
@@ -220,6 +218,7 @@ class Trick
     public function setSpotlightPicturePath(?string $spotlightPicturePath): self
     {
         $this->spotlightPicturePath = $spotlightPicturePath;
+        $this->fileSpotlightPicturePath = new File('picture/medias/'.$this->getSpotlightPicturePath());
 
         return $this;
     }
@@ -232,7 +231,9 @@ class Trick
     public function setFileSpotlightPicturePath(?File $fileSpotlightPicturePath): self
     {
         $this->fileSpotlightPicturePath = $fileSpotlightPicturePath;
-
+        if($this->fileSpotlightPicturePath){
+            $this->spotlightPicturePath = uniqid().'.'. $this->fileSpotlightPicturePath->guessExtension();
+        }
         return $this;
     }
 
