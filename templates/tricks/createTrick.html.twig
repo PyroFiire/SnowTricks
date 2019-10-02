@@ -10,10 +10,10 @@
             <img id="spotlight_picture" src="{{asset('picture/snowboarding-3554x1999.jpg') }}"  alt="...">
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             <div id="picture_buttons" class="d-flex flex-row">
-                <a href="#" id="jsBtnUpload" class"card-link" style="margin-right:15px">
+                <a href="#" id="spotlightFileUpload" class"card-link" style="margin-right:15px">
                     <i class="fas fa-pencil-alt fa-2x"></i>
                 </a>
-                <a href="#" class"card-link">
+                <a href="#" id="spotlightFileDelete" class"card-link">
                     <i class="fas fa-trash-alt fa-2x"></i>
                 </a>
             </div>
@@ -21,7 +21,7 @@
         <div class="row">
             <div id="form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
                 {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
-                    {{form_widget(formTrick.fileSpotlightPicturePath, {'label': false})}}
+                    {{form_widget(formTrick.fileSpotlightPicturePath, {'attr':{'onchange':'readURL(this);'}}, {'label': false})}}
                     <ul class="medias" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
                         {# iterate over each existing tag and render its only field: name #}
                         {% for media in formTrick.medias %}
@@ -44,9 +44,33 @@
 {% block javascripts %}
     <script src={{ asset('js/mediasCollectionType.js')}}></script>
     <script>
-        $("#jsBtnUpload").on('click', function(e){
+        // For upload file
+        $("#spotlightFileUpload").on('click', function(e){
         $('#trick_fileSpotlightPicturePath').click();
         });
     </script>
+    <script>
+        //for delete current file if he was uploaded
+        var defaultSpotlight = $('#spotlight_picture').attr('src');
+        
+        $("#spotlightFileDelete").on('click', function(e){
+        $("#trick_fileSpotlightPicturePath").attr('type', 'text').attr('type', 'file');
+        $('#spotlight_picture').attr('src', defaultSpotlight);
+        });
+    </script>
+    <script>
+        //preview the upload file
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#spotlight_picture')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 {% endblock javascripts %}

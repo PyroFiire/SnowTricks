@@ -10,10 +10,10 @@
             <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="...">
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             <div id="picture_buttons" class="d-flex flex-row">
-                <a href="#" id="jsBtnUpload" class"card-link" style="margin-right:15px">
+                <a href="#" id="spotlightFileUpload" class"card-link" style="margin-right:15px">
                     <i class="fas fa-pencil-alt fa-2x"></i>
                 </a>
-                <a href="#" class"card-link">
+                <a href="#" id="spotlightFileDelete" class"card-link">
                     <i class="fas fa-trash-alt fa-2x"></i>
                 </a>
             </div>
@@ -21,7 +21,7 @@
         <div class="row">
             <div id="form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
                 {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
-                    {{form_widget(formTrick.fileSpotlightPicturePath, {'label': false})}}
+                    {{form_widget(formTrick.fileSpotlightPicturePath,{'attr':{'onchange':'readURL(this);'}}, {'label': false})}}
                     <ul class="medias" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
                         {# iterate over each existing tag and render its only field: name #}
                         {% for media in formTrick.medias %}
@@ -45,12 +45,6 @@
 
 {% block javascripts %}
     <script src={{ asset('js/modalDeleteTrick.js')}}></script>
-
     <script src={{ asset('js/mediasCollectionType.js')}}></script>
-    <script>
-        $("#jsBtnUpload").on('click', function(e){
-        $('#trick_fileSpotlightPicturePath').click();
-        });
-    </script>
-
+    <script src={{ asset('js/spotlightFileUpload.js')}}></script>
 {% endblock javascripts %}
