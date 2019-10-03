@@ -4,14 +4,17 @@ $("#trick_fileSpotlightPicturePath").parent().addClass('d-none');
 // For upload file
 $("#spotlightFileUpload").on('click', function(e){
 $('#trick_fileSpotlightPicturePath').click();
+return false;
 });
 
 //for delete current file if he was uploaded
-var defaultSpotlight = $('#spotlight_picture').attr('src');
+var defaultSpotlight = '/picture/snowboarding-3554x1999.jpg';
+//var defaultSpotlight = $('#spotlight_picture').attr('src');
 
 $("#spotlightFileDelete").on('click', function(e){
 $("#trick_fileSpotlightPicturePath").attr('type', 'text').attr('type', 'file');
 $('#spotlight_picture').attr('src', defaultSpotlight);
+return false;
 });
 
 //preview the upload file

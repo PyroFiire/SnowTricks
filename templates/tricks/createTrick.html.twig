@@ -19,21 +19,29 @@
             </div>
         </figure>
         <div class="row">
-            <div id="form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
+            <div id="form_div" class="col-12">
                 {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
                     {{form_widget(formTrick.fileSpotlightPicturePath, {'attr':{'onchange':'readURL(this);'}}, {'label': false})}}
-                    <ul class="medias" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
-                        {# iterate over each existing tag and render its only field: name #}
-                        {% for media in formTrick.medias %}
-                            <li>{{ form_row(media) }}</li>
-                        {% endfor %}
-                    </ul>
+                    <div class="container-fluid">
+                        <ul class="medias row" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
+                            {# iterate over each existing tag and render its only field: name #}
+                            {% for media in formTrick.medias %}
+                                <li>{{ form_row(media) }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                     {{form_row(formTrick.medias, {'label': false})}}
-                    {{form_row(formTrick.title)}}
-                    {{form_row(formTrick.description)}}
-                    {{form_row(formTrick.groupTrick)}}
-                    <div id="buttons_form">
-                        <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 col-md-10 col-lg-8 col-xl-6 ">
+                                {{form_row(formTrick.title)}}
+                                {{form_row(formTrick.description)}}
+                                {{form_row(formTrick.groupTrick)}}
+                                <div id="buttons_form">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 {{ form_end(formTrick) }}
             </div>

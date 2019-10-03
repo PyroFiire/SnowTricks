@@ -21,8 +21,10 @@
 /**************** HEADER TRICK ******************/
 #spotlight_picture{
     width: 100%;
+    max-height: 40vw;
 }
 figure{
+    text-align: center;
     position : relative;
 }
 #picture_buttons{
@@ -65,4 +67,9 @@ form{
 @media all and (min-width: 768px) /* Medium and + */      {#buttons_form{text-align : right;}}
 #buttons_form .btn{
     width: 71px;
+}
+
+/******** MEDIAS in form ************/
+.medias li{
+    list-style-type: none;
 }

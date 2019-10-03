@@ -14,9 +14,10 @@ class MediaType extends AbstractType
     {
         $builder
             ->add('type', ChoiceType::class, [
+                'label' => false,
                 'choices' => [
-                    'picture' => 'picture',
-                    'video'    => 'video',
+                    'Picture' => 'picture',
+                    'Video'    => 'video',
             ]])
             ->add('path')
         ;
