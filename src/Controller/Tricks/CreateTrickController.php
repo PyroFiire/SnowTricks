@@ -9,18 +9,21 @@ use Twig\Environment;
 
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use Psr\Container\ContainerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\Filesystem\Filesystem;
+
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
-class FormTrickController
+class CreateTrickController
 {
     /**
      * @var UrlGeneratorInterface
@@ -47,64 +50,68 @@ class FormTrickController
      */
     private $trickRepository;
 
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
     public function __construct(
         UrlGeneratorInterface $router,
         Environment $twig,
         FormFactoryInterface $form,
         EntityManagerInterface $manager,
-        TrickRepository $trickRepository
-    )
+        TrickRepository $trickRepository,
+        Filesystem $filesystem,
+        ContainerInterface $container
+        )
     {
         $this->router = $router;
         $this->twig = $twig;
         $this->trickRepository = $trickRepository;
         $this->manager = $manager;
         $this->form = $form;
+        $this->filesystem = $filesystem;
+        $this->container = $container;
     }
 
     /**
      * @Route("/tricks/create/", name="trick_create")
-     * @Route("/tricks/edit/{slug}", name="trick_edit")
      */
-    public function formTrick(Request $request)
+    public function createTrick(Request $request)
     {
-        $trick = $this->trickRepository->findOneBySlug($request->attributes->get('slug'));
-
-        if(!$trick){
-            $trick = new Trick();
-        }
-        dump($trick);
-/*
-        $media1 = new Media();
-        $media1->setType('')
-               ->setPath('')
-               ->setCreatedAt(new \DateTime());
-        $trick->addMedia($media1);
+       //$fileSpotlightPicturePath = new File($this->container->getParameter('medias_directory').'/'.$trick->getSpotlightPicturePath());
+        //$trick->setFileSpotlightPicturePath($fileSpotlightPicturePath);
+       
+        //dump($fileSpotlightPicturePath);
 
 
-        $originalMedias = new ArrayCollection();
-        // Create an ArrayCollection of the current Tag objects in the database
-        foreach ($trick->getMedias() as $media) {
-            $originalMedias->add($media);
-        }
-*/
-        $formTrick = $this->form->create(TrickType::class, $trick);
+        $formTrick = $this->form->create(TrickType::class, $trick = new Trick());
         $formTrick->handleRequest($request);
-        dump($trick);
+
+
+
         if($formTrick->isSubmitted() && $formTrick->isValid()){
             $trick->setSlug($trick->getTitle());
-            if(!$trick->getCreatedAt()){
-                $trick->setCreatedAt(new \DateTime());
-            }else{
-                $trick->setModifiedAt(new \DateTime());
-            }
+            $trick->setCreatedAt(new \DateTime());
+            
+            $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
+
             foreach ($trick->getMedias() as $media) {
-
-                $media->setCreatedAt(new \DateTime());
                 $trick->addMedia($media);
-
             }
-            dump($trick);
+
+            if($trick->getFileSpotlightPicturePath()){
+                try {
+                    $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+            }
             $this->manager->persist($trick);
             $this->manager->flush();
 
@@ -115,10 +122,9 @@ class FormTrickController
         }
 
         return new Response($this->twig->render(
-            'tricks/formTrick.html.twig', [
+            'tricks/createTrick.html.twig', [
             'trick' => $trick,
-            'formTrick' => $formTrick->createView(),
-            'editMode' => $trick->getCreatedAt() !== null
+            'formTrick' => $formTrick->createView()        
         ]));
 
     }

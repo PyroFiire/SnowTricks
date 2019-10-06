@@ -58,6 +58,8 @@ class LoadFixtures extends Fixture
 
         $this->filesystem->remove([$this->container->getParameter('avatars_directory')]);
         $this->filesystem->mkdir($this->container->getParameter('avatars_directory'));
+        $this->filesystem->remove([$this->container->getParameter('medias_directory')]);
+        $this->filesystem->mkdir($this->container->getParameter('medias_directory'));
 
         //create toto user for test
         $user = new User;

@@ -33,11 +33,10 @@ class TrickType extends AbstractType
                 'class' => GroupTrick::class,
                 'choice_label' => 'name'
             ])
-            ->add('spotlightPicturePath', FileType::class, [
+            ->add('fileSpotlightPicturePath', FileType::class, [
                 'data_class' => null,
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [

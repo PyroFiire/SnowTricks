@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create your Trick{% endblock %}
+
+{% block stylesheets %}<link href={{ asset('css/formTrick.css') }} type="text/css" rel="stylesheet">{% endblock %}
+
+{% block body %}
+    <div id="trick" class="container">
+        <figure>
+            <img id="spotlight_picture" src="{{asset('picture/snowboarding-3554x1999.jpg') }}"  alt="...">
+            <figcaption><h1>{{ trick.title }}</h1></figcaption>
+            <div id="picture_buttons" class="d-flex flex-row">
+                <a href="#" id="spotlightFileUpload" class"card-link" style="margin-right:15px">
+                    <i class="fas fa-pencil-alt fa-2x"></i>
+                </a>
+                <a href="#" id="spotlightFileDelete" class"card-link">
+                    <i class="fas fa-trash-alt fa-2x"></i>
+                </a>
+            </div>
+        </figure>
+        <div class="row">
+            <div id="form_div" class="col-12">
+                {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{form_widget(formTrick.fileSpotlightPicturePath, {'attr':{'onchange':'readURL(this);'}}, {'label': false})}}
+                    <div class="container-fluid">
+                        <ul class="medias row" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
+                            {# iterate over each existing tag and render its only field: name #}
+                            {% for media in formTrick.medias %}
+                                <li>{{ form_row(media) }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {{form_row(formTrick.medias, {'label': false})}}
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 col-md-10 col-lg-8 col-xl-6 ">
+                                {{form_row(formTrick.title)}}
+                                {{form_row(formTrick.description)}}
+                                {{form_row(formTrick.groupTrick)}}
+                                <div id="buttons_form">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{ form_end(formTrick) }}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    <script src={{ asset('js/mediasCollectionType.js')}}></script>
+    <script src={{ asset('js/spotlightFileUpload.js')}}></script>
+{% endblock javascripts %}
