@@ -21,7 +21,7 @@
         <div class="row">
             <div id="form_div" class="col-12">
                 {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
-                    {{form_widget(formTrick.fileSpotlightPicturePath, {'attr':{'onchange':'readURL(this);'}}, {'label': false})}}
+                    {{form_widget(formTrick.fileSpotlightPicturePath,  {'label': false})}}
                     <div class="container-fluid">
                         <ul class="medias row" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
                             {# iterate over each existing tag and render its only field: name #}
