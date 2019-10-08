@@ -4,56 +4,61 @@ var $collectionHolder;
 var $addMediaButton = $('<button type="button" class="add_media_link" onclick="addMediaForm()">Add a media</button>');
 var $newLinkLi = $('<li></li>').append($addMediaButton);
 
+//Execute le code lorque la page a fini d'être chargé
 jQuery(document).ready(function() {
 
-    // Get the ul that holds the collection of tags
+    // récupère le ul qui a la class="medias"
     $collectionHolder = $('ul.medias');
     
-    // add a delete link to all of the existing tag form li elements
-    $collectionHolder.find('li').each(function() {
+    //ajoute un bouton de suppresion à la fin de chaque li
+    $collectionHolder.find('li').each(function() { //each() permet de boucler une function sur une collection d'objets jQuery
         addMediaFormDeleteLink($(this));
     });
 
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
+    //ajoute un bouton d'ajout d'un medias à la fin de la collection (ul)
+    $collectionHolder.append($newLinkLi); //append() ajoute du contenu à la fin à chaque elements selectionné (ici un seul ul)
 
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    //stock en data dans la collection le nombre d'input
+    console.log($collectionHolder);
+    $collectionHolder.data('index', $collectionHolder.find(':input').length); //data('cle','valeur') permet de stocké une donnée
 
+    //evenement click qui ajoute un nouveau media
     $addMediaButton.on('click', function(e) {
-        // add a new tag form (see next code block)
+        // add a new media form (see next code block)
         addMediaForm($collectionHolder, $newLinkLi);
     });
 });
 
-function addMediaForm($collectionHolder, $newLinkLi) {
-    // Get the data-prototype explained earlier
-    var prototype = $collectionHolder.data('prototype');
 
-    // get the new index
+
+function addMediaForm($collectionHolder, $newLinkLi) {
+    // Get the data-prototype fabriquer par MediaType en PHP
+    var prototype = $collectionHolder.data('prototype'); //data('cle') permet de recupérer une donnée
+
+    // recupère le nombre de medias actuellement affiché
     var index = $collectionHolder.data('index');
 
     var newForm = prototype;
-    // You need this only if you didn't set 'label' => false in your tags field in TaskType
-    // Replace '__name__label__' in the prototype's HTML to
-    // instead be a number based on how many items we have
+
+    // Remplace '__name__' dans le prototype's basé sur le nombre de medias actuel
+    newForm = newForm.replace(/__name__/g, index); // (g)expliquation : Pour remplacer toutes les occurrences d'une valeur spécifiée, utilisez le modificateur global (g) 
+
+    /* You need this only if you didn't set 'label' => false in your tags field in TaskType */
     // newForm = newForm.replace(/__name__label__/g, index);
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    newForm = newForm.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
+    
+    // Ajoute plus un à l'index pour l'ahout du prochain media
     $collectionHolder.data('index', index + 1);
 
-    // Display the form in the page in an li, before the "Add a tag" link li
+    // Ajoute une balise <li> autour du prototype(newForm)
     var $newFormLi = $('<li></li>').append(newForm);
+    // Ajoute ce <li> juste avant le bouton "add a media"(newLinkLi)
     $newLinkLi.before($newFormLi);
 
-    // add a delete link to the new form
+    // Ajoute un lien de suppression au nouveau prototype inséré(newFormLi)
     addMediaFormDeleteLink($newFormLi);
 }
+
+
 
 function addMediaFormDeleteLink($mediaFormLi) {
     var $removeFormButton = $('<button type="button">Delete this media</button>');
