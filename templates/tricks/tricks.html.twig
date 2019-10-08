@@ -7,11 +7,14 @@
     <div id="div_main__image">
         <img id="main_image" src={{ asset('picture/snowboarding-3554x1999.jpg')}}  alt="SnowTrick">
         <h1>Life is Snowboard</h1>
+        <a id="downToTrick" href="#"class"card-link">
+            <i class="fas fa-arrow-down fa-4x"></i>
+        </a>
     </div>
     <div class="container-fluid">
         <div class="row">
             {% for trick in tricks %}
-                <div class="col-12 col-md-6 col-lg-4 col-xl-3" style="padding:10px;">
+                <div class="div-card col-12 col-md-6 col-lg-4 col-xl-3">
                     <div class="card">
                         <a href="{{ path('trick_show', {'slug':trick.slug}) }}">
                             <img class="card-img-top" src="https://via.placeholder.com/300x200"  alt="...">
@@ -33,6 +36,9 @@
                 </div>
             {% endfor %}
         </div>
+        <a id="upToTrick" href="#"class"card-link">
+            <i class="fas fa-arrow-up fa-4x"></i>
+        </a>
     </div>
     {{ include('tricks/modalDeleteTrick.html.twig') }}
 {% endblock body %}
