@@ -30,7 +30,6 @@ class HomepageController
 
     /**
      * @Route("/", name="index")
-     * @Route("/tricks", name="tricks")
      */
     public function homepage()
     {

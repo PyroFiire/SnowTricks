@@ -32,7 +32,7 @@ h1{
 
 /******** Buttons ******/
 
-#downToTrick, #upToTrick{
+#downToTricks, #upToTricks{
     color :black;
     position: absolute;
     right: 30px;

@@ -7,11 +7,11 @@
     <div id="div_main__image">
         <img id="main_image" src={{ asset('picture/snowboarding-3554x1999.jpg')}}  alt="SnowTrick">
         <h1>Life is Snowboard</h1>
-        <a id="downToTrick" href="#"class"card-link">
+        <a id="downToTricks" href="#"class"card-link">
             <i class="fas fa-arrow-down fa-4x"></i>
         </a>
     </div>
-    <div class="container-fluid">
+    <div id="tricks" class="container-fluid">
         <div class="row">
             {% for trick in tricks %}
                 <div class="div-card col-12 col-md-6 col-lg-4 col-xl-3">
@@ -36,7 +36,7 @@
                 </div>
             {% endfor %}
         </div>
-        <a id="upToTrick" href="#"class"card-link">
+        <a id="upToTricks" href="#"class"card-link">
             <i class="fas fa-arrow-up fa-4x"></i>
         </a>
     </div>
@@ -45,4 +45,5 @@
 
 {% block javascripts %}
     <script src={{ asset('js/modalDeleteTrick.js')}}></script>
+    <script src={{ asset('js/buttonsToTricks.js')}}></script>
 {% endblock javascripts %}
