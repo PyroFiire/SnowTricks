@@ -18,12 +18,16 @@ h1{
     top : 45%;
     text-align: center;
 }
+h1:hover{
+    color : white;
+    cursor: default;
+}
 
 /********** TRICKS ********/
 
 .container-fluid{
     position: relative;
-    padding : 30px 15px 100px 15px;
+    padding : 30px 15px 30px 15px;
 }
 
 .div-card{
@@ -33,8 +37,16 @@ h1{
 /******** Buttons ******/
 
 #downToTricks, #upToTricks{
-    color :black;
     position: absolute;
     right: 30px;
     bottom: 30px;
+    background-color: white;
+    border-radius: 50%;
+}
+#downToTricks:hover, #upToTricks:hover{
+    background-color: #2FA4E7;
+}
+
+#divLoadMore{
+    text-align: center;
 }

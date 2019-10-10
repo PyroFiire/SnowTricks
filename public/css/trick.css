@@ -92,3 +92,8 @@ form button{
     margin-bottom : 0px;
     word-wrap: break-word;
 }
+
+/********** Button load more ***********/
+#loadMore{
+    margin-bottom: 20px;
+}
