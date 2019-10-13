@@ -57,6 +57,8 @@ class TrickShowController
      */
     private $commentRepository;
 
+    private $numberCommentsDisplayBegin = 5;
+
     public function __construct(
         UrlGeneratorInterface $router,
         Environment $twig,
@@ -82,7 +84,7 @@ class TrickShowController
     public function trick_show(Request $request)
     {
         $trick = $this->trickRepository->findOneBySlug($request->attributes->get('slug'));
-        $comments = $this->commentRepository->findByTrick($trick);
+        $comments = $this->commentRepository->findByTrick($trick,['createdAt' => 'DESC'],$this->numberCommentsDisplayBegin);
 
         $formComment = $this->form->create(CommentType::class, $comment = new Comment());
         $formComment->handleRequest($request);
@@ -105,6 +107,7 @@ class TrickShowController
         return new Response($this->twig->render(
             'tricks/trick.html.twig', [
             'trick' => $trick,
+            'comments' => $comments,
             'formComment' => $formComment->createView()
         ]));
     }

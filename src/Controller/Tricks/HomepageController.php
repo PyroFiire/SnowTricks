@@ -19,6 +19,9 @@ class HomepageController
      */
     private $trickRepository;
 
+    private $numberTricksDisplayBegin = 8;
+    
+
     public function __construct(
         Environment $twig,
         TrickRepository $trickRepository
@@ -33,7 +36,7 @@ class HomepageController
      */
     public function homepage()
     {
-        $tricks = $this->trickRepository->findAll();
+        $tricks = $this->trickRepository->findBy([],['createdAt' => 'DESC'],$this->numberTricksDisplayBegin);
 
         return new Response($this->twig->render(
             'tricks/tricks.html.twig', [

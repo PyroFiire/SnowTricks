@@ -7,36 +7,20 @@
     <div id="div_main__image">
         <img id="main_image" src={{ asset('picture/snowboarding-3554x1999.jpg')}}  alt="SnowTrick">
         <h1>Life is Snowboard</h1>
-        <a id="downToTricks" href="#"class"card-link">
+        <a id="downToTricks" href="#tricks" class="btn btn-outline-primary">
             <i class="fas fa-arrow-down fa-4x"></i>
         </a>
     </div>
     <div id="tricks" class="container-fluid">
         <div class="row">
-            {% for trick in tricks %}
-                <div class="div-card col-12 col-md-6 col-lg-4 col-xl-3">
-                    <div class="card">
-                        <a href="{{ path('trick_show', {'slug':trick.slug}) }}">
-                            <img class="card-img-top" src="https://via.placeholder.com/300x200"  alt="...">
-                        </a>
-                        <div class="card-body d-flex flex-row justify-content-between">
-                            <a href="{{ path('trick_show', {'slug':trick.slug}) }}" class="h4 card-title text-truncate" title="{{ trick.title }}">{{ trick.title }}</a>
-                            {% if app.user %}
-                                <div class="d-flex flex-row">
-                                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class"card-link" style="margin-right:15px">
-                                        <i class="fas fa-pencil-alt fa-2x"></i>
-                                    </a>
-                                    <a href="delete" class"card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
-                                        <i class="fas fa-trash-alt fa-2x"></i>
-                                    </a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+            {{ include('tricks/tricksDisplay.html.twig') }}
         </div>
-        <a id="upToTricks" href="#"class"card-link">
+        <div id="divLoadMore">
+            <a id="loadMore" href="{{ path('trick_loadMore')}}" class="btn btn-outline-primary">
+                <i class="fas fa-spinner fa-2x"> Load More</i>
+            </a>
+        </div>
+        <a id="upToTricks" href="#tricks" class="btn btn-outline-primary">
             <i class="fas fa-arrow-up fa-4x"></i>
         </a>
     </div>
@@ -46,4 +30,5 @@
 {% block javascripts %}
     <script src={{ asset('js/modalDeleteTrick.js')}}></script>
     <script src={{ asset('js/buttonsToTricks.js')}}></script>
+    <script src={{ asset('js/ajax/loadMoreTricks.js')}}></script>
 {% endblock javascripts %}
