@@ -16,6 +16,11 @@ class LoadMoreTricks
      */
     private $trickRepository;
 
+    /**
+     * @var Environment
+     */
+    private $twig;
+
     public function __construct(
         Environment $twig,
         TrickRepository $trickRepository

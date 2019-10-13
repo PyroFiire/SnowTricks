@@ -16,7 +16,7 @@
             {{ include('tricks/tricksDisplay.html.twig') }}
         </div>
         <div id="divLoadMore">
-            <a id="loadMore" href="{{ path('trick_loadMore', {'currentLimit':tricks|length }) }}" class="btn btn-outline-primary">
+            <a id="loadMore" href="{{ path('trick_loadMore')}}" class="btn btn-outline-primary">
                 <i class="fas fa-spinner fa-2x"> Load More</i>
             </a>
         </div>
