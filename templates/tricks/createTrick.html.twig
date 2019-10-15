@@ -23,14 +23,21 @@
                 {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
                     {{form_widget(formTrick.fileSpotlightPicturePath,  {'label': false})}}
                     <div class="container-fluid">
-                        <ul class="medias row" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
+                        <ul class="videos row" data-prototype="{{ form_widget(formTrick.videos.vars.prototype)|e('html_attr') }}">
                             {# iterate over each existing tag and render its only field: name #}
-                            {% for media in formTrick.medias %}
-                                <li>{{ form_row(media) }}</li>
+                            {% for video in formTrick.videos %}
+                                <li>{{ form_row(video) }}</li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="pictures row" data-prototype="{{ form_widget(formTrick.pictures.vars.prototype)|e('html_attr') }}">
+                            {# iterate over each existing tag and render its only field: name #}
+                            {% for picture in formTrick.pictures %}
+                                <li>{{ form_row(picture) }}</li>
                             {% endfor %}
                         </ul>
                     </div>
-                    {{form_row(formTrick.medias, {'label': false})}}
+                    {{form_row(formTrick.videos, {'label': false})}}
+                    {{form_row(formTrick.pictures, {'label': false})}}
                     <div class="container">
                         <div class="row d-flex justify-content-center">
                             <div class="col-12 col-md-10 col-lg-8 col-xl-6 ">

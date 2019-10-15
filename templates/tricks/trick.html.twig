@@ -14,10 +14,10 @@
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             {% if app.user %}
                 <div id="picture_buttons" class="d-flex flex-row">
-                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class"card-link" style="margin-right:15px">
+                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class="card-link" style="margin-right:15px">
                         <i class="fas fa-pencil-alt fa-2x"></i>
                     </a>
-                    <a href="delete" class"card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
+                    <a href="delete" class="card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
                         <i class="fas fa-trash-alt fa-2x"></i>
                     </a>
                 </div>

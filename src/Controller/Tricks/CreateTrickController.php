@@ -98,12 +98,7 @@ class CreateTrickController
         if($formTrick->isSubmitted() && $formTrick->isValid()){
             $trick->setSlug($trick->getTitle());
             $trick->setCreatedAt(new \DateTime());
-            
             $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
-
-            foreach ($trick->getMedias() as $media) {
-                $trick->addMedia($media);
-            }
 
             if($trick->getFileSpotlightPicturePath()){
                 try {
@@ -113,6 +108,13 @@ class CreateTrickController
                 }
             }
             $this->manager->persist($trick);
+
+            foreach ($formTrick->get('videos')->getData() as $video) {
+                $video->setTrick($trick);
+                $video->setFormat('youtube'); //TODO TRAITEMENT
+                $this->manager->persist($video);
+            }
+
             $this->manager->flush();
 
             return new RedirectResponse($this->router->generate(
