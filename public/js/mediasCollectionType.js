@@ -1,10 +1,15 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addVideoButton = $('<button type="button" class="add_video_link" onclick="addVideoForm()">Add a video</button>');
+var $addVideoButton = $('<button type="button" class="add_video_link" >Add a video</button>');
+$addVideoButton.addClass('btn btn-primary');
 var $newVideoLinkLi = $('<li></li>').append($addVideoButton);
-var $addPictureButton = $('<button type="button" class="add_picture_link" onclick="addPictureForm()">Add a picture</button>');
+$newVideoLinkLi.attr('id', 'add_video_li').addClass('col-12');
+
+var $addPictureButton = $('<button type="button" class="add_picture_link" >Add a picture</button>');
+$addPictureButton.addClass('btn btn-primary');
 var $newPictureLinkLi = $('<li></li>').append($addPictureButton);
+$newPictureLinkLi.attr('id', 'add_video_link').addClass('col-12');
 
 //Execute le code lorque la page a fini d'être chargé
 jQuery(document).ready(function() {
@@ -54,11 +59,12 @@ function addMediaForm($collectionHolder, $newLinkLi) {
     // Remplace '__name__' dans le prototype's basé sur le nombre de medias actuel
     newForm = newForm.replace(/__name__/g, index); // (g)expliquation : Pour remplacer toutes les occurrences d'une valeur spécifiée, utilisez le modificateur global (g) 
     
-    // Ajoute plus un à l'index pour l'ahout du prochain media
+    // Ajoute plus un à l'index pour l'ajout du prochain media
     $collectionHolder.data('index', index + 1);
 
     // Ajoute une balise <li> autour du prototype(newForm)
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormLi = $('<li class="col-12 col-md-11 col-lg-10 col-xl-7 d-flex justify-content-around"></li>').append(newForm);
+
     // Ajoute ce <li> juste avant le bouton "add a media"(newLinkLi)
     $newLinkLi.before($newFormLi);
 
@@ -67,7 +73,8 @@ function addMediaForm($collectionHolder, $newLinkLi) {
 }
 
 function addMediaFormDeleteLink($mediaFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this media</button>');
+    var $removeFormButton = $('<button type="button">Delete this</button>');
+    $removeFormButton.addClass('btn btn-danger');
     $mediaFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
@@ -75,3 +82,4 @@ function addMediaFormDeleteLink($mediaFormLi) {
         $mediaFormLi.remove();
     });
 }
+

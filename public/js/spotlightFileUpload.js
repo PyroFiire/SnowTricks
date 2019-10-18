@@ -1,9 +1,10 @@
+var inputFile = $('#trick_spotlightPicturePath_file');
 //Display:none the basique input
-$("#trick_fileSpotlightPicturePath").parent().addClass('d-none');
+//inputFile.parent().addClass('d-none');
 
 // clic button for upload file
 $("#spotlightFileUpload").on('click', function(e){
-    $('#trick_fileSpotlightPicturePath').click();
+    inputFile.click();
     return false;
 });
 
@@ -13,7 +14,7 @@ var defaultSpotlight = '/picture/snowboarding-3554x1999.jpg';
 
 // clic button for reset the file input
 $("#spotlightFileDelete").on('click', function(e){
-    $("#trick_fileSpotlightPicturePath")
+    inputFile
         .attr('type', 'text')
         .attr('type', 'file');
     $('#spotlight_picture')
@@ -22,7 +23,7 @@ $("#spotlightFileDelete").on('click', function(e){
 });
 
 // preview image if is changed input
-$("#trick_fileSpotlightPicturePath").on('change', function(){
+inputFile.on('change', function(){
     readURL(this);
 });
 

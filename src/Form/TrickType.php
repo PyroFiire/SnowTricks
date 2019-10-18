@@ -4,15 +4,13 @@ namespace App\Form;
 
 use App\Entity\Trick;
 use App\Form\MediaType;
+use App\Form\PictureType;
 use App\Entity\GroupTrick;
-use Symfony\Component\Form\AbstractType;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
@@ -28,6 +26,9 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'mapped' => false,
                 'prototype' => true,
+                'attr' => [
+                    'class' => 'col-12'
+                ]
             ])
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,
@@ -44,19 +45,11 @@ class TrickType extends AbstractType
                 'class' => GroupTrick::class,
                 'choice_label' => 'name'
             ])
-            ->add('fileSpotlightPicturePath', FileType::class, [
+            ->add('spotlightPicturePath', PictureType::class, [
                 'data_class' => null,
                 'mapped' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpeg',
-                        ],
-                        'mimeTypesMessage' => 'The mime type of the file is invalid. Allowed mime types are ".png", ".jpeg".',
-                    ])
-            ]])
+                'label' => false,
+            ])
         ;
     }
 

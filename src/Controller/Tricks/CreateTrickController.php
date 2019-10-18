@@ -93,26 +93,43 @@ class CreateTrickController
         $formTrick = $this->form->create(TrickType::class, $trick = new Trick());
         $formTrick->handleRequest($request);
 
-
-
         if($formTrick->isSubmitted() && $formTrick->isValid()){
             $trick->setSlug($trick->getTitle());
             $trick->setCreatedAt(new \DateTime());
-            $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
 
-            if($trick->getFileSpotlightPicturePath()){
-                try {
-                    $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-            }
+            //$fileSpotlight = $formTrick['spotlightPicturePath']->getData();
+            //dd($formTrick);
+            $fileSpotlight = $formTrick->get('spotlightPicturePath')->getData();
+            //$this->spotlightPicturePath = uniqid().'.'. $this->fileSpotlightPicturePath->guessExtension();
+
+            // $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
+
+            // if($trick->getFileSpotlightPicturePath()){
+            //     try {
+            //         $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
+            //     } catch (FileException $e) {
+            //         // ... handle exception if something happens during file upload
+            //     }
+            // }
             $this->manager->persist($trick);
+            
 
             foreach ($formTrick->get('videos')->getData() as $video) {
                 $video->setTrick($trick);
+
                 $video->setFormat('youtube'); //TODO TRAITEMENT
                 $this->manager->persist($video);
+            }
+
+            foreach ($formTrick->get('pictures') as $pictureForm) {
+                $picture = $pictureForm->getData();
+                $file = $pictureForm->get('file')->getData();
+                $path= uniqid().'.'. $file->guessExtension();
+
+                $picture->setTrick($trick);
+                $picture->setPath($path);
+                $this->manager->persist($picture);
+                $file->move($this->container->getParameter('medias_directory'), $path );
             }
 
             $this->manager->flush();

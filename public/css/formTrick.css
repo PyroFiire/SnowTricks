@@ -70,6 +70,11 @@ form{
 }
 
 /******** MEDIAS in form ************/
-.medias li{
+/************* videos and pictures **********/
+.videos, .pictures{
     list-style-type: none;
+    text-align: center;
+}
+#medias button{
+    margin-bottom: 16px;
 }
