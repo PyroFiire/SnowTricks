@@ -1,6 +1,6 @@
 var inputFile = $('#trick_spotlightPicturePath_file');
 //Display:none the basique input
-//inputFile.parent().addClass('d-none');
+inputFile.parent().addClass('d-none');
 
 // clic button for upload file
 $("#spotlightFileUpload").on('click', function(e){

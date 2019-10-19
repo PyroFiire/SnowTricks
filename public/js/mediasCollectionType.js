@@ -42,6 +42,7 @@ jQuery(document).ready(function() {
     $addPictureButton.on('click', function(e) {
         // add a new media form (see next code block)
         addMediaForm($collectionPictureHolder, $newPictureLinkLi);
+        bsCustomFileInput.init();
     });
 });
 

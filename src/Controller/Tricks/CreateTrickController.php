@@ -94,31 +94,47 @@ class CreateTrickController
         $formTrick->handleRequest($request);
 
         if($formTrick->isSubmitted() && $formTrick->isValid()){
+
             $trick->setSlug($trick->getTitle());
             $trick->setCreatedAt(new \DateTime());
 
-            //$fileSpotlight = $formTrick['spotlightPicturePath']->getData();
-            //dd($formTrick);
-            $fileSpotlight = $formTrick->get('spotlightPicturePath')->getData();
-            //$this->spotlightPicturePath = uniqid().'.'. $this->fileSpotlightPicturePath->guessExtension();
-
-            // $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
-
-            // if($trick->getFileSpotlightPicturePath()){
-            //     try {
-            //         $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
-            //     } catch (FileException $e) {
-            //         // ... handle exception if something happens during file upload
-            //     }
-            // }
+            $fileSpotlight = $formTrick->get('spotlightPicturePath')->get('file')->getData();
+            if($fileSpotlight !== null) {
+                $nameSpotlight = uniqid().'.'. $fileSpotlight->guessExtension();
+                $trick->setSpotlightPicturePath($nameSpotlight);
+                $fileSpotlight->move($this->container->getParameter('medias_directory'), $nameSpotlight );
+            }
             $this->manager->persist($trick);
             
+            $videosSite = [
+                'youtube' => 'https://www.youtube.com',
+                'dailymotion' => 'https://www.dailymotion.com',
+            ];
 
-            foreach ($formTrick->get('videos')->getData() as $video) {
-                $video->setTrick($trick);
+            foreach ($formTrick->get('videos') as $videoForm) {
+                $url = $videoForm->get('url')->getData();
+                $video = $videoForm->getData();
+                $parseUrl = parse_url($url);
+                $host = $parseUrl['scheme'].'://'.$parseUrl['host'];
+                parse_str($parseUrl['query'], $parseParams);
+                
+                if(in_array($host, $videosSite, true)) {
 
-                $video->setFormat('youtube'); //TODO TRAITEMENT
-                $this->manager->persist($video);
+                    if('youtube' === $videoSite = array_search($host, $videosSite)) {
+                        $name = $parseParams['v'];
+                        $video->setFormat($videoSite);
+                        $video->setName($name);
+                        $video->setUrlEmbed($host.'/embed/'.$name);
+                    }
+                    if('dailymotion' === $videoSite = array_search($host, $videosSite)) {
+                        $name = substr(strrchr($parseUrl['path'], '/'), 1);
+                        $video->setFormat($videoSite);
+                        $video->setName($name);
+                        $video->setUrlEmbed($host.'/embed/video/'.$name);
+                    }
+                    $video->setTrick($trick);
+                    $this->manager->persist($video);
+                }                
             }
 
             foreach ($formTrick->get('pictures') as $pictureForm) {

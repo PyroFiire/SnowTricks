@@ -19,26 +19,31 @@ class Video extends Media
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $url;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $format;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $urlEmbed;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getName(): ?string
     {
-        return $this->url;
+        return $this->name;
     }
 
-    public function setUrl(?string $url): self
+    public function setName(?string $name): self
     {
-        $this->url = $url;
+        $this->name = $name;
 
         return $this;
     }
@@ -51,6 +56,18 @@ class Video extends Media
     public function setFormat(string $format): self
     {
         $this->format = $format;
+
+        return $this;
+    }
+
+    public function getUrlEmbed(): ?string
+    {
+        return $this->urlEmbed;
+    }
+
+    public function setUrlEmbed(string $urlEmbed): self
+    {
+        $this->urlEmbed = $urlEmbed;
 
         return $this;
     }
