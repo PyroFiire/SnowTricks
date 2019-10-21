@@ -84,12 +84,6 @@ class CreateTrickController
      */
     public function createTrick(Request $request)
     {
-       //$fileSpotlightPicturePath = new File($this->container->getParameter('medias_directory').'/'.$trick->getSpotlightPicturePath());
-        //$trick->setFileSpotlightPicturePath($fileSpotlightPicturePath);
-       
-        //dump($fileSpotlightPicturePath);
-
-
         $formTrick = $this->form->create(TrickType::class, $trick = new Trick());
         $formTrick->handleRequest($request);
 

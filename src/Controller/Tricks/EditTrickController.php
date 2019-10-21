@@ -85,16 +85,12 @@ class EditTrickController
     public function editTrick(Request $request)
     {
         $trick = $this->trickRepository->findOneBySlug($request->attributes->get('slug'));
-        $initialTrick = clone $trick;   
         $this->manager->refresh($trick);
 
         $formTrick = $this->form->create(TrickType::class, $trick);
         $formTrick->handleRequest($request);
 
         if($formTrick->isSubmitted() && $formTrick->isValid()){
-            // if($trick->getSpotlightPicturePath()){
-            //     $trick->setSpotlightPicturePath($trick->getSpotlightPicturePath());
-            // }
 
             $trick->setSlug($trick->getTitle());
             $trick->setModifiedAt(new \DateTime());
@@ -102,22 +98,6 @@ class EditTrickController
             foreach ($trick->getMedias() as $media) {
                 $media->setCreatedAt(new \DateTime());
                 $trick->addMedia($media);
-            }
-            $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
-            try {
-                if($trick->getSpotlightPicturePath() !== $initialTrick->getSpotlightPicturePath()){
-                    //alors ya eu changement
-                    $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
-                    //efface l'ancienne image si elle existe
-                    if($initialTrick->getSpotlightPicturePath() !== null){
-                        $this->filesystem->remove([$this->container->getParameter('medias_directory').'/'.$initialTrick->getSpotlightPicturePath()]);
-                    }
-                }
-                else{
-                    //sinon ya pas eu de changement
-                }
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
             }
 
             $this->manager->persist($trick);
