@@ -2,26 +2,19 @@
 
 namespace App\Controller\Tricks;
 
-use App\Entity\Media;
-
 use App\Entity\Trick;
 use Twig\Environment;
 
 use App\Form\TrickType;
-use App\Repository\TrickRepository;
-use Psr\Container\ContainerInterface;
-use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\Filesystem\Filesystem;
+use App\HandleForm\CreateEditTrickForm;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\HttpFoundation\File\File;
 
 class CreateTrickController
 {
@@ -39,44 +32,23 @@ class CreateTrickController
      * @var FormFactoryInterface
      */
     private $form;
-    
-    /**
-     * @var EntityManagerInterface
-     */
-    private $manager;
 
     /**
-     * @var TrickRepository
+     * @var CreateEditTrickForm
      */
-    private $trickRepository;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private $createEditTrickForm;
 
     public function __construct(
         UrlGeneratorInterface $router,
         Environment $twig,
         FormFactoryInterface $form,
-        EntityManagerInterface $manager,
-        TrickRepository $trickRepository,
-        Filesystem $filesystem,
-        ContainerInterface $container
+        CreateEditTrickForm $createEditTrickForm
         )
     {
         $this->router = $router;
         $this->twig = $twig;
-        $this->trickRepository = $trickRepository;
-        $this->manager = $manager;
         $this->form = $form;
-        $this->filesystem = $filesystem;
-        $this->container = $container;
+        $this->createEditTrickForm = $createEditTrickForm;
     }
 
     /**
@@ -84,48 +56,21 @@ class CreateTrickController
      */
     public function createTrick(Request $request)
     {
-       //$fileSpotlightPicturePath = new File($this->container->getParameter('medias_directory').'/'.$trick->getSpotlightPicturePath());
-        //$trick->setFileSpotlightPicturePath($fileSpotlightPicturePath);
-       
-        //dump($fileSpotlightPicturePath);
-
-
         $formTrick = $this->form->create(TrickType::class, $trick = new Trick());
         $formTrick->handleRequest($request);
 
-
-
-        if($formTrick->isSubmitted() && $formTrick->isValid()){
-            $trick->setSlug($trick->getTitle());
-            $trick->setCreatedAt(new \DateTime());
-            
-            $trick->setFileSpotlightPicturePath($formTrick['fileSpotlightPicturePath']->getData());
-
-            foreach ($trick->getMedias() as $media) {
-                $trick->addMedia($media);
-            }
-
-            if($trick->getFileSpotlightPicturePath()){
-                try {
-                    $trick->getFileSpotlightPicturePath()->move($this->container->getParameter('medias_directory'), $trick->getSpotlightPicturePath() );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-            }
-            $this->manager->persist($trick);
-            $this->manager->flush();
-
+        if ($this->createEditTrickForm->handleForm($formTrick, $trick)) {
             return new RedirectResponse($this->router->generate(
                 'trick_show',
                 ['slug' => $trick->getSlug()]
             ));
+        } else {
+            return new Response($this->twig->render(
+                'tricks/createTrick.html.twig', [
+                'trick' => $trick,
+                'formTrick' => $formTrick->createView()        
+            ]));
         }
-
-        return new Response($this->twig->render(
-            'tricks/createTrick.html.twig', [
-            'trick' => $trick,
-            'formTrick' => $formTrick->createView()        
-        ]));
 
     }
 

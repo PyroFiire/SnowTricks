@@ -20,6 +20,7 @@
 /**************** HEADER TRICK ******************/
 #spotlight_picture{
     width: 100%;
+    max-height: 40vw;
 }
 figure{
     position : relative;
@@ -41,6 +42,19 @@ figcaption{
 h1{
     text-align: center;
 }
+
+/************ MEDIAS *************/
+#medias{
+    padding : 30px;
+}
+.div-card{
+    padding : 20px;
+}
+
+.card-img-top{
+    height: 250px;
+}
+
 /************ CONTENTS *************/
 #description{
     padding : 0px 20px;
@@ -49,7 +63,7 @@ h1{
 
 #information > p {
     border : 1px solid black;
-    margin : 0px 10px;
+    margin : 0px 10px 10px 10px;
     padding: 10px;
     text-align : center;
 }
@@ -92,6 +106,19 @@ form button{
     margin-bottom : 0px;
     word-wrap: break-word;
 }
+
+
+@media all and (max-width: 577px) /* Small */ { 
+    .comment > div{margin:0px 10px 0px 10px; }
+    .comment img{ height: 30px;
+                  width : 30px;
+                  left : 30px;  
+                  top : 5px;
+    }
+    #comment_username{ padding-left : 35px;}
+
+}
+
 
 /********** Button load more ***********/
 #loadMore{

@@ -1,35 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{trick.title}}{% endblock %}
-{% block stylesheets %}<link href={{ asset('css/trick.css') }} type="text/css" rel="stylesheet">{% endblock %}
+{% block stylesheets %}<link href="{{ asset('css/trick.css') }}" type="text/css" rel="stylesheet">{% endblock %}
 
 {% block body %}
     <div id="trick" class="container">
         <figure>
             {% if trick.spotlightPicturePath %}
-                <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="...">
+                <a href="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"><img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="{{trick.title}}"></a>
             {% else %}
-                <img id="spotlight_picture" src="{{asset('picture/snowboarding-3554x1999.jpg') }}"  alt="...">
+                <a href="{{asset('picture/defaultSpotlightPicture.jpg') }}"><img id="spotlight_picture" src="{{asset('picture/defaultSpotlightPicture.jpg') }}"  alt="{{trick.title}}"></a>
             {% endif %}
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             {% if app.user %}
                 <div id="picture_buttons" class="d-flex flex-row">
-                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class"card-link" style="margin-right:15px">
+                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class="card-link">
                         <i class="fas fa-pencil-alt fa-2x"></i>
                     </a>
-                    <a href="delete" class"card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
+                    <a href="delete" class="card-link" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">
                         <i class="fas fa-trash-alt fa-2x"></i>
                     </a>
                 </div>
             {% endif %}
         </figure>
-        <p>Display Medias</p>
-        <p id="description">{{trick.description}}</p>
+        <div id="medias" class="row">
+            {% for media in trick.medias %}
+                <div class="div-card col-12 col-md-12 col-lg-6 col-xl-4">
+                    <div class="card">
+                        {%  if media.urlEmbed is defined %}
+                            <iframe class="card-img-top" width="500" height="300" src="{{media.urlEmbed}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        {% elseif media.path is defined %}
+                            <a href="{{asset('picture/medias/' ~ media.path) }}"><img class="card-img-top" src="{{asset('picture/medias/' ~ media.path) }}"  alt="{{trick.title}}"></a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <p id="description">Description : {{trick.description}}</p>
+        </div>
         <div id="information" class="row justify-content-center">
-            <p class="col-3">Groupe : {{trick.groupTrick.name}}</p>
-            <p class="col-3">Créé le {{trick.createdAt|date("d/m/Y à H:i") }}</p>
+            <p class="col-10 col-md-10 col-lg-5 col-xl-3">Group : {{trick.groupTrick.name}}</p>
+            <p class="col-10 col-md-10 col-lg-5 col-xl-3">Created at {{trick.createdAt|date("d/m/Y à H:i") }}</p>
             {% if trick.modifiedAt %}
-                <p class="col-3">Modifié le {{trick.modifiedAt|date("d/m/Y à H:i") }}</p>
+                <p class="col-10 col-md-10 col-lg-5 col-xl-3">Modified on {{trick.modifiedAt|date("d/m/Y à H:i") }}</p>
             {% endif %}
         </div>
         <hr>
@@ -54,6 +68,6 @@
 {% endblock body %}
 
 {% block javascripts %}
-    <script src={{ asset('js/modalDeleteTrick.js')}}></script>
-    <script src={{ asset('js/ajax/loadMoreComments.js')}}></script>
+    <script src="{{ asset('js/modalDeleteTrick.js')}}"></script>
+    <script src="{{ asset('js/ajax/loadMoreComments.js')}}"></script>
 {% endblock  javascripts %}

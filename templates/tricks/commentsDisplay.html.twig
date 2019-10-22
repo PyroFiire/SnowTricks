@@ -6,7 +6,7 @@
             <img src="{{asset('picture/default_avatar.jpg')}}"  alt="{{comment.user.username}}'s avatar">
         {% endif %}
         <div>
-            <strong>{{comment.user.username}}</strong>
+            <strong id="comment_username" >{{comment.user.username}}</strong>
             <p>{{comment.content}}</p>
             <small>the {{comment.createdAt|date("Y/m/d \\a\\t h:i a") }}</small>
         </div>

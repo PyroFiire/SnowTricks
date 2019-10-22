@@ -65,8 +65,6 @@ class Trick
      */
     private $spotlightPicturePath;
 
-    private $fileSpotlightPicturePath;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -218,23 +216,6 @@ class Trick
     public function setSpotlightPicturePath(?string $spotlightPicturePath): self
     {
         $this->spotlightPicturePath = $spotlightPicturePath;
-        $this->fileSpotlightPicturePath = new File('picture/medias/'.$this->getSpotlightPicturePath());
-
         return $this;
     }
-
-    public function getFileSpotlightPicturePath(): ?File
-    {
-        return $this->fileSpotlightPicturePath;
-    }
-
-    public function setFileSpotlightPicturePath(?File $fileSpotlightPicturePath): self
-    {
-        $this->fileSpotlightPicturePath = $fileSpotlightPicturePath;
-        if($this->fileSpotlightPicturePath){
-            $this->spotlightPicturePath = uniqid().'.'. $this->fileSpotlightPicturePath->guessExtension();
-        }
-        return $this;
-    }
-
 }
