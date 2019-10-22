@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
@@ -49,6 +50,14 @@ class TrickType extends AbstractType
                 'data_class' => null,
                 'mapped' => false,
                 'label' => false,
+            ])
+            ->add('spotlightDelete', HiddenType::class, [
+                'mapped' => false,
+                'label' => false
+            ])
+            ->add('mediaDelete', HiddenType::class, [
+                'mapped' => false,
+                'label' => false
             ])
         ;
     }

@@ -8,9 +8,9 @@
     <div id="trick" class="container">
         <figure>
             {% if trick.spotlightPicturePath %}
-                <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="...">
+                <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="{{trick.title}}">
             {% else %}
-                <img id="spotlight_picture" src="{{asset('picture/snowboarding-3554x1999.jpg') }}"  alt="...">
+                <img id="spotlight_picture" src="{{asset('picture/defaultSpotlightPicture.jpg') }}"  alt="{{trick.title}}">
             {% endif %}
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             <div id="picture_buttons" class="d-flex flex-row">
@@ -22,23 +22,46 @@
                 </a>
             </div>
         </figure>
+        <div id="medias" class="row">
+            {% for media in trick.medias %}
+                <div class="div-card col-12 col-md-12 col-lg-6 col-xl-4">
+                    <div class="card">
+                        {%  if media.urlEmbed is defined %}
+                            <iframe class="card-img-top" width="500" height="300" src="{{media.urlEmbed}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        {% elseif media.path is defined %}
+                            <a href="{{asset('picture/medias/' ~ media.path) }}"><img class="card-img-top" src="{{asset('picture/medias/' ~ media.path) }}"  alt="{{trick.title}}"></a>
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <a data-id="{{media.id}}" href="#" class="btn btn-danger mediaDelete">Delete this</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         <div class="row">
-            <div id="form_div" class="col-12 col-md-10 col-lg-8 col-xl-6">
+            <div id="form_div" class="col-12">
                 {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}}) }}
-                    {{form_widget(formTrick.fileSpotlightPicturePath,{'attr':{'onchange':'readURL(this);'}}, {'label': false})}}
-                    <ul class="medias" data-prototype="{{ form_widget(formTrick.medias.vars.prototype)|e('html_attr') }}">
-                        {# iterate over each existing tag and render its only field: name #}
-                        {% for media in formTrick.medias %}
-                            <li>{{ form_row(media) }}</li>
-                        {% endfor %}
-                    </ul>
-                    {{form_row(formTrick.medias, {'label': false})}}
-                    {{form_row(formTrick.title)}}
-                    {{form_row(formTrick.description)}}
-                    {{form_row(formTrick.groupTrick)}}
-                    <div id="buttons_form">
-                        <a href="delete" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">Delete</a>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                    <div id="medias" class="container-fluid">
+                        <ul class="videos row justify-content-center" data-prototype="{{ form_widget(formTrick.videos.vars.prototype)|e('html_attr') }}"></ul>
+                        <ul class="pictures row justify-content-center" data-prototype="{{ form_widget(formTrick.pictures.vars.prototype)|e('html_attr') }}"></ul>
+                    {{form_row(formTrick.videos, {'label': false})}}
+                    {{form_row(formTrick.pictures, {'label': false})}}
+                    </div>
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 col-md-10 col-lg-8 col-xl-6 ">
+                                {{form_row(formTrick.title)}}
+                                {{form_row(formTrick.description)}}
+                                {{form_row(formTrick.groupTrick)}}
+                                {{form_row(formTrick.spotlightDelete)}}
+                                {{form_row(formTrick.mediaDelete)}}
+                                <div id="buttons_form">
+                                    <a href="{{ path('trick_edit', {'slug':trick.slug}) }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="delete" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteTrick" data-title="{{trick.title}}" data-slug="{{trick.slug}}">Delete</a>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 {{ form_end(formTrick) }}
             </div>
@@ -51,4 +74,6 @@
     <script src={{ asset('js/modalDeleteTrick.js')}}></script>
     <script src={{ asset('js/mediasCollectionType.js')}}></script>
     <script src={{ asset('js/spotlightFileUpload.js')}}></script>
+    <script src={{ asset('js/customInputFile.js')}}></script>
+    <script src={{ asset('js/mediaDelete.js')}}></script>
 {% endblock javascripts %}

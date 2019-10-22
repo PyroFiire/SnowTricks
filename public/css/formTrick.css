@@ -69,7 +69,18 @@ form{
     width: 71px;
 }
 
-/******** MEDIAS in form ************/
+/************ MEDIAS Display (for edit) *************/
+#medias{
+    padding : 30px;
+}
+.div-card{
+    padding : 20px;
+}
+
+.card-img-top{
+    height: 250px;
+}
+
 /************* videos and pictures **********/
 .videos, .pictures{
     list-style-type: none;

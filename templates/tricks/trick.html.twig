@@ -7,9 +7,9 @@
     <div id="trick" class="container">
         <figure>
             {% if trick.spotlightPicturePath %}
-                <img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="{{trick.title}}">
+                <a href="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"><img id="spotlight_picture" src="{{asset('picture/medias/' ~ trick.spotlightPicturePath) }}"  alt="{{trick.title}}"></a>
             {% else %}
-                <img id="spotlight_picture" src="{{asset('picture/defaultSpotlightPicture.jpg') }}"  alt="{{trick.title}}">
+                <a href="{{asset('picture/defaultSpotlightPicture.jpg') }}"><img id="spotlight_picture" src="{{asset('picture/defaultSpotlightPicture.jpg') }}"  alt="{{trick.title}}"></a>
             {% endif %}
             <figcaption><h1>{{ trick.title }}</h1></figcaption>
             {% if app.user %}

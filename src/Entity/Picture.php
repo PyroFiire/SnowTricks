@@ -9,22 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Picture extends Media
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $path;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getPath(): ?string
     {
