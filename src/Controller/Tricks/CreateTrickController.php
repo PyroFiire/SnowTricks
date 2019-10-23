@@ -60,6 +60,10 @@ class CreateTrickController
         $formTrick->handleRequest($request);
 
         if ($this->createEditTrickForm->handleForm($formTrick, $trick)) {
+            $request->getSession()->getFlashBag()->add(
+                'Notice',
+                'Your Trick has been created !'
+            );
             return new RedirectResponse($this->router->generate(
                 'trick_show',
                 ['slug' => $trick->getSlug()]

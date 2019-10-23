@@ -49,7 +49,11 @@ class DeleteTrickController
 
         $this->manager->remove($trick);
         $this->manager->flush();
-        
+
+        $request->getSession()->getFlashBag()->add(
+            'Notice',
+            'Your Trick has been deleted !'
+        );
         return new RedirectResponse($this->router->generate('index'));
     }
 }
