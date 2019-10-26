@@ -1,19 +1,19 @@
 var numberCommentsLoadMore = 5;
 var currentLimit = $('#comments .comment').length;
-var button = $("#loadMore");
+var buttonLoadMore = $("#loadMore");
 const MIN_COMMENTS_FOR_DISPLAY_BUTTON = 5;
 
 if(currentLimit < MIN_COMMENTS_FOR_DISPLAY_BUTTON) {
-    button.hide();
+    buttonLoadMore.hide();
 }
 
 $(document).ready(function(){
 
-    button.on('click', function(e) {
+    buttonLoadMore.on('click', function(e) {
         e.preventDefault();
     
         $.ajax({
-            url : button.attr('href'),
+            url : buttonLoadMore.attr('href'),
             type : 'POST',
             data : 'currentLimit=' + currentLimit + '&numberCommentsLoadMore=' + numberCommentsLoadMore,
             dataType : 'html', // Le type de données à recevoir, ici, du HTML.
@@ -24,7 +24,7 @@ $(document).ready(function(){
                 var numberCommentsInserted = $(commentsDatas).filter('.comment').length ;
                 
                 if(numberCommentsInserted != numberCommentsLoadMore) {
-                    button.hide();
+                    buttonLoadMore.hide();
                 }
             },
             error : function(resultat, statut, erreur){

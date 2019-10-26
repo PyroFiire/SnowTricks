@@ -23,7 +23,10 @@
                 </div>
             {% endif %}
         </figure>
-        <div id="medias" class="row">
+        <div class="text-center">
+            <button id="seeMedias" class="btn btn-primary">See medias</button>
+        </div>
+        <div id="medias_show" class="row">
             {% for media in trick.medias %}
                 <div class="div-card col-12 col-md-12 col-lg-6 col-xl-4">
                     <div class="card">
@@ -70,4 +73,5 @@
 {% block javascripts %}
     <script src="{{ asset('js/modalDeleteTrick.js')}}"></script>
     <script src="{{ asset('js/ajax/loadMoreComments.js')}}"></script>
+    <script src="{{ asset('js/seeMedias.js')}}"></script>
 {% endblock  javascripts %}

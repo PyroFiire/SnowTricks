@@ -74,7 +74,7 @@ function addMediaForm($collectionHolder, $newLinkLi) {
 }
 
 function addMediaFormDeleteLink($mediaFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this</button>');
+    var $removeFormButton = $('<button type="button">Delete</button>');
     $removeFormButton.addClass('btn btn-danger');
     $mediaFormLi.append($removeFormButton);
 

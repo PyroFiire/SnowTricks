@@ -44,8 +44,11 @@ h1{
 }
 
 /************ MEDIAS *************/
-#medias{
-    padding : 30px;
+#seeMedias{
+    display:none;
+}
+#medias_show{
+    padding : 0px 30px 30px 30px;
 }
 .div-card{
     padding : 20px;
@@ -54,7 +57,14 @@ h1{
 .card-img-top{
     height: 250px;
 }
-
+@media all and (max-width: 577px) /* Small */{
+    #medias_show{
+        display : none;
+    }
+    #seeMedias{
+        display : inline-block;
+    }
+}
 /************ CONTENTS *************/
 #description{
     padding : 0px 20px;
