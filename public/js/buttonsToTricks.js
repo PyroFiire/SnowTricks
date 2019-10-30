@@ -1,4 +1,4 @@
-const MIN_TRICKS_FOR_DISPLAY_BUTTON_UP = 15
+const MIN_TRICKS_FOR_DISPLAY_BUTTON_UP = 9
 var numberTricks = $('#tricks .card').length;
 
 //return bool

@@ -44,9 +44,9 @@
         </div>
         <div id="information" class="row justify-content-center">
             <p class="col-10 col-md-10 col-lg-5 col-xl-3">Group : {{trick.groupTrick.name}}</p>
-            <p class="col-10 col-md-10 col-lg-5 col-xl-3">Created at {{trick.createdAt|date("d/m/Y à H:i") }}</p>
+            <p class="col-10 col-md-10 col-lg-5 col-xl-3">Created on {{trick.createdAt|date("Y/m/d \\a\\t H:i a") }}</p>
             {% if trick.modifiedAt %}
-                <p class="col-10 col-md-10 col-lg-5 col-xl-3">Modified on {{trick.modifiedAt|date("d/m/Y à H:i") }}</p>
+                <p class="col-10 col-md-10 col-lg-5 col-xl-3">Modified on {{trick.modifiedAt|date("Y/m/d \\a\\t H:i a") }}</p>
             {% endif %}
         </div>
         <hr>

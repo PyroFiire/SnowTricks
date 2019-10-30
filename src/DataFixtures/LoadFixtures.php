@@ -12,9 +12,10 @@ use Psr\Container\ContainerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class LoadFixtures extends Fixture
+class LoadFixtures extends Fixture implements FixtureGroupInterface
 {
 
     /**
@@ -51,6 +52,11 @@ class LoadFixtures extends Fixture
         $this->container = $container;
     }
 
+    public static function getGroups(): array
+    {
+        return ['test'];
+    }
+    
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');

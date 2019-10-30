@@ -25,11 +25,6 @@ class Video extends Media
      */
     private $urlEmbed;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
