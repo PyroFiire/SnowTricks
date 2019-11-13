@@ -95,7 +95,7 @@ class RegistrationController
             $user->setActive(false);
             $user->setActiveToken($this->tokenSecurity->generateToken());
             $email = (new TemplatedEmail())
-                ->from('snowtrick11@gmail.com')
+                ->from('registration@snowtricks.com')
                 ->to($user->getEmail())
                 ->subject('Active your account !')
                 ->htmlTemplate('emails/registration.html.twig')

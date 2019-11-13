@@ -93,7 +93,7 @@ class ForgotPasswordController
             $user->setForgotPasswordToken($this->tokenSecurity->generateToken());
 
             $email = (new TemplatedEmail())
-                ->from('snowtrick11@gmail.com')
+                ->from('forgot_password@snowtricks.com')
                 ->to($user->getEmail())
                 ->subject('Forgot Password')
                 ->htmlTemplate('emails/forgotPassword.html.twig')
