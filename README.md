@@ -3,6 +3,8 @@ SnowTricks
 
 Projet 6 du parcours PHP / Symfony sur OpenClassrooms - Développez de A à Z le site communautaire SnowTricks
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3f10def50b134d508b2cd56b13555069)](https://www.codacy.com/manual/PyroFiire/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PyroFiire/SnowTricks&amp;utm_campaign=Badge_Grade)
+
 INSTRUCTION
 -----------
 
